@@ -453,7 +453,7 @@ const statusFeatures: Record<
     users[uuid].status = "hold";
 
     // 先指定要搜尋的欄位
-    if (!users[uuid].Variables.searchField) {
+    if (users[uuid].Variables.searchField === null) {
       const validFields = ["編號", "英文名稱", "中文名稱", "種類"];
       const matchedField = validFields.find((field) =>
         messageText.includes(field)
