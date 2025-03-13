@@ -437,10 +437,12 @@ const statusFeatures: Record<
 
     for (const [key, value] of Object.entries(dialog)) {
       if (messageText.toLowerCase().includes(key)) {
+        users[uuid].status = "normal";
         return [{ type: "text", text: value }];
       }
     }
 
+    users[uuid].status = "normal";
     return [
       { type: "text", text: `你今天想幹嘛呢❓\n快點喔~我可是個大忙人呢😎` },
     ];
