@@ -511,7 +511,7 @@ const statusFeatures: Record<
     );
     const currentPage = Math.max(0, users[uuid].Variables.page);
     const start = currentPage * pageView;
-    const end = Math.min(start + pageView, results.length);
+    const end = Math.min(start + pageView);
 
     users[uuid].status = "awaiting_search";
     return [
