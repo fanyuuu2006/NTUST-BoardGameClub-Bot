@@ -494,6 +494,10 @@ const statusFeatures: Record<
             type: "text",
             text: `❌未找到與 ${messageText} 相符的資料`,
           },
+          {
+            type: "text",
+            text: `若想退出狀態請輸入【 重置 】`,
+          }
         ];
       }
     }
@@ -523,7 +527,7 @@ const statusFeatures: Record<
               {
                 type: "text",
                 text:
-                  currentPage < 0 || currentPage >= totalPages
+                  currentPage < 0 || currentPage > totalPages
                     ? "沒資料不要再翻了啦😣"
                     : `第 ${
                         currentPage + 1
