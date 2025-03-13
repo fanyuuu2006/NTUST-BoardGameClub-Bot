@@ -500,6 +500,7 @@ const statusFeatures: Record<
           },
         ];
       }
+      users[uuid].Variables.page = 0; // 搜索結果後清空頁面狀態，以便從第一頁顯示
     }
 
     const pageView = 3; // 每頁顯示的結果數量
