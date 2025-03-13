@@ -426,6 +426,7 @@ const statusFeatures: Record<
     } of keywords) {
       // 轉成小寫判斷英文字
       if (messageText.toLowerCase().includes(keyword)) {
+        users[uuid].status = "normal";
         if (menberOnly && !(uuid in users)) {
           return [{ type: "text", text: "❌請先註冊，只有社員才能使用此功能" }];
         }
