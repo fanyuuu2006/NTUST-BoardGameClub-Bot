@@ -531,14 +531,11 @@ const statusFeatures: Record<
             contents: [
               {
                 type: "text",
-                text:
+                text: `第${currentPage + 1} 頁 / 共 ${totalPages} 頁\n\n${
                   currentPage < 0 || currentPage >= totalPages
                     ? "沒資料不要再翻了啦😣"
-                    : `第 ${
-                        currentPage + 1
-                      } 頁 / 共 ${totalPages} 頁\n\n${results
-                        .slice(start, end)
-                        .join("\n\n")}`,
+                    : `${results.slice(start, end).join("\n\n")}`
+                }`,
                 wrap: true,
                 size: "md",
               },
