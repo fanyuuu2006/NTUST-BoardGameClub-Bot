@@ -60,7 +60,7 @@ export const getUserData = async (uuid: string): Promise<void> => {
     },
     status: users[uuid]?.status ?? "normal",
     Variables: users[uuid]?.Variables ?? {
-      searchField: null,
+      searchParams: null,
       game: null,
       page: 0,
       userData: {},
@@ -178,7 +178,10 @@ const normalFeatures: Record<
       },
       status: "normal",
       Variables: {
-        searchField: null,
+        searchParams: {
+          field: null,
+          value: null,
+        },
         game: null,
         page: 0,
         userData: {},
@@ -235,7 +238,10 @@ const normalFeatures: Record<
 
   找遊戲: (uuid: string) => {
     users[uuid].status = "awaiting_search"; // 設定狀態為等待搜尋桌遊
-    users[uuid].Variables.searchField = null;
+    users[uuid].Variables.searchParams = {
+      field: null,
+      value: null,
+    };
     users[uuid].Variables.page = 0;
     return [
       {
@@ -454,14 +460,14 @@ const statusFeatures: Record<
     users[uuid].status = "hold";
 
     // 先指定要搜尋的欄位
-    if (users[uuid].Variables.searchField === null) {
+    if (users[uuid].Variables.searchParams.field === null) {
       const validFields = ["編號", "英文名稱", "中文名稱", "種類"];
       const matchedField = validFields.find((field) =>
         messageText.includes(field)
       );
 
       if (matchedField) {
-        users[uuid].Variables.searchField = matchedField;
+        users[uuid].Variables.searchParams.field = matchedField;
         users[uuid].status = "awaiting_search";
         return [
           {
@@ -480,28 +486,22 @@ const statusFeatures: Record<
       ];
     }
 
-    // 如果有要搜尋的欄位之後搜尋
-    let results: string[] = [];
     if (!(messageText === "下一頁" || messageText === "上一頁")) {
-      results = await customSearchInSheet(
-        [{ field: users[uuid].Variables.searchField, value: messageText }],
-        uuid
-      );
-      if (results.length <= 0) {
-        users[uuid].status = "awaiting_search";
-        return [
-          {
-            type: "text",
-            text: `❌未找到與 ${messageText} 相符的資料`,
-          },
-          {
-            type: "text",
-            text: `若想退出狀態請輸入【 重置 】`,
-          },
-        ];
-      }
+      users[uuid].status = "awaiting_search";
+      users[uuid].Variables.searchParams.value = messageText;
       users[uuid].Variables.page = 0; // 搜索結果後清空頁面狀態，以便從第一頁顯示
     }
+
+    //進行搜尋，並顯示搜尋結果
+    const results = await customSearchInSheet(
+      [
+        users[uuid].Variables.searchParams as {
+          field: string;
+          value: string;
+        },
+      ],
+      uuid
+    );
 
     const pageView = 3; // 每頁顯示的結果數量
     const totalPages = Math.ceil(results.length / pageView); // 總頁數

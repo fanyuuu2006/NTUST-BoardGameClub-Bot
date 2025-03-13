@@ -34,7 +34,7 @@ export type User = {
   status: Status;
   // 佔存的資料變數
   Variables: {
-    searchField: string | null;
+    searchParams: { field: string | null; value: string | null };
     page: number;
     game: string[] | null;
     userData: Partial<Record<keyof UserData | "registerkey", string>>;
