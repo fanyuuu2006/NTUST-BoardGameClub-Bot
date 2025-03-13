@@ -1147,7 +1147,6 @@ export const judgeText = async (
 
   // Debug 用
   if (messageText === "狀態") {
-    delete users[uuid];
     return [{ type: "text", text: users[uuid].status }];
   }
 
