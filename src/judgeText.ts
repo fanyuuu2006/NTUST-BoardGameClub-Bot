@@ -497,21 +497,25 @@ const statusFeatures: Record<
           {
             type: "text",
             text: `若想退出狀態請輸入【 重置 】`,
-          }
+          },
         ];
       }
     }
 
     const pageView = 3; // 每頁顯示的結果數量
     const totalPages = Math.ceil(results.length / pageView); // 總頁數
-    users[uuid].Variables.page = Math.min(
-      totalPages - 1,
-      (users[uuid].Variables.page || 0) +
-        (messageText === "下一頁" ? 1 : messageText === "上一頁" ? -1 : 0)
+    // 確保頁面不會小於 0
+    users[uuid].Variables.page = Math.max(
+      0,
+      Math.min(
+        totalPages - 1,
+        (users[uuid].Variables.page || 0) +
+          (messageText === "下一頁" ? 1 : messageText === "上一頁" ? -1 : 0)
+      )
     );
-    const currentPage = Math.max(0, users[uuid].Variables.page);
+    const currentPage = users[uuid].Variables.page;
     const start = currentPage * pageView;
-    const end = Math.min(start + pageView);
+    const end = Math.min(start + pageView, results.length); // 保證結束頁面不超過資料長度
 
     users[uuid].status = "awaiting_search";
     return [
@@ -527,7 +531,7 @@ const statusFeatures: Record<
               {
                 type: "text",
                 text:
-                  currentPage < 0 || currentPage > totalPages
+                  currentPage < 0 || currentPage >= totalPages
                     ? "沒資料不要再翻了啦😣"
                     : `第 ${
                         currentPage + 1
