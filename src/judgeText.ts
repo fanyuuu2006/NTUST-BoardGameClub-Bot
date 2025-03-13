@@ -58,8 +58,8 @@ export const getUserData = async (uuid: string): Promise<void> => {
       phonenumber: row[6], // 電話
       permission: row[8], // 權限
     },
-    status: "normal",
-    Variables: {
+    status: users[uuid].status ?? "normal",
+    Variables: users[uuid].Variables ?? {
       searchField: null,
       game: null,
       page: 0,
@@ -400,6 +400,7 @@ const statusFeatures: Record<
   ) => line.Message[] | Promise<line.Message[]>
 > = {
   normal: (uuid: string, messageText: string) => {
+    users[uuid].status = "hold";
     for (const {
       keyword,
       menberOnly,
