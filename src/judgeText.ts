@@ -1145,6 +1145,12 @@ export const judgeText = async (
     return [{ type: "text", text: "🔄重置成功" }];
   }
 
+  // Debug 用
+  if (messageText === "狀態") {
+    delete users[uuid];
+    return [{ type: "text", text: users[uuid].status }];
+  }
+
   return (await statusFeatures[users[uuid].status](
     uuid,
     messageText
