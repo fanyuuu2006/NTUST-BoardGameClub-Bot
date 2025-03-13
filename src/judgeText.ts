@@ -481,18 +481,21 @@ const statusFeatures: Record<
     }
 
     // 如果有要搜尋的欄位之後搜尋
-    const results: string[] = await customSearchInSheet(
-      [{ field: users[uuid].Variables.searchField, value: messageText }],
-      uuid
-    );
-    if (results.length <= 0) {
-      users[uuid].status = "awaiting_search";
-      return [
-        {
-          type: "text",
-          text: `❌未找到與 ${messageText} 相符的資料`,
-        },
-      ];
+    let results: string[] = [];
+    if (!(messageText === "下一頁" || messageText === "上一頁")) {
+      results = await customSearchInSheet(
+        [{ field: users[uuid].Variables.searchField, value: messageText }],
+        uuid
+      );
+      if (results.length <= 0) {
+        users[uuid].status = "awaiting_search";
+        return [
+          {
+            type: "text",
+            text: `❌未找到與 ${messageText} 相符的資料`,
+          },
+        ];
+      }
     }
 
     const pageView = 3; // 每頁顯示的結果數量
