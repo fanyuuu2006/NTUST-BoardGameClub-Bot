@@ -61,3 +61,8 @@ const handleEvent = async (event: {
     await judgeText(messageText, uuid)
   );
 };
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
