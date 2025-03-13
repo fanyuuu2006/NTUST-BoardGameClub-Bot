@@ -149,6 +149,7 @@ const normalFeatures: Record<
   // 自動註冊(因為我們窮有時候他會卡卡的，這時候可以繼續照順序輸入資料或使用手動註冊就可以了)
   註冊: (uuid: string) => {
     if (uuid in users) {
+      users[uuid].status = "normal";
       return [
         {
           type: "text",
@@ -203,23 +204,30 @@ const normalFeatures: Record<
     ];
   },
 
-  手動註冊: (uuid: string) => [
-    { type: "text", text: `這是你的UUID：` },
-    { type: "text", text: `${uuid}` },
-    {
-      type: "text",
-      text: `至以下表單進行手動註冊，填完後至信箱查看註冊結果\nhttps://docs.google.com/forms/d/e/1FAIpQLScHRQ2RzRO9iVFshhSbCi9LIupTw3bJbPfDgkWGi1SJrcLp3w/viewform?usp=sf_link`,
-    },
-  ],
+  手動註冊: (uuid: string) => {
+    users[uuid].status = "normal";
+    return [
+      { type: "text", text: `這是你的UUID：` },
+      { type: "text", text: `${uuid}` },
+      {
+        type: "text",
+        text: `至以下表單進行手動註冊，填完後至信箱查看註冊結果\nhttps://docs.google.com/forms/d/e/1FAIpQLScHRQ2RzRO9iVFshhSbCi9LIupTw3bJbPfDgkWGi1SJrcLp3w/viewform?usp=sf_link`,
+      },
+    ];
+  },
 
-  測試: (uuid: string) => [
-    {
-      type: "text",
-      text: `${users[uuid].data.nickname}測啥呢`,
-    },
-  ],
+  測試: (uuid: string) => {
+    users[uuid].status = "normal";
+    return [
+      {
+        type: "text",
+        text: `${users[uuid].data.nickname}測啥呢`,
+      },
+    ];
+  },
 
   簽到: (uuid: string) => {
+    users[uuid].status = "normal";
     if (!ALLOW) {
       // 社課開始時 幹部開啟允許
       return [{ type: "text", text: "社課還沒開始你簽到啥阿❓" }];
@@ -347,7 +355,7 @@ const normalFeatures: Record<
   ],
 
   // 列出熱門桌遊(前十名)
-  熱門桌遊: async (_): Promise<line.Message[]> => {
+  熱門桌遊: async (uuid: string): Promise<line.Message[]> => {
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID_PUB,
       range: "桌遊清單!A:E",
@@ -371,6 +379,7 @@ const normalFeatures: Record<
           row[1]
         }\n 中文名稱: ${row[2]}\n 種類: ${row[3]}\n`
     );
+    users[uuid].status = "normal";
     return [
       {
         type: "text",
@@ -382,6 +391,7 @@ const normalFeatures: Record<
 
   on: (uuid: string) => {
     ALLOW = true;
+    users[uuid].status = "normal";
     return [
       {
         type: "text",
@@ -392,6 +402,7 @@ const normalFeatures: Record<
 
   off: (uuid: string) => {
     ALLOW = true;
+    users[uuid].status = "normal";
     return [
       { type: "text", text: `${users[uuid].data.nickname}有記得關~算你識相🤩` },
     ];
