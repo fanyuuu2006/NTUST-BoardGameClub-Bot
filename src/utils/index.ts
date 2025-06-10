@@ -1,4 +1,4 @@
-import {  users } from "../libs/index";
+import { users } from "../libs/index";
 import { statusFeatures } from "../libs/statusFeatures";
 import { MessageHandler } from "../types/line";
 import https from "https";
@@ -17,7 +17,7 @@ export const messageHandler: MessageHandler = async (
     return [{ type: "text", text: users[uuid].status }];
   }
 
-  return statusFeatures[users[uuid].status](uuid, messageText);
+  return statusFeatures[users[uuid].status](messageText, uuid);
 };
 
 export const sendGetRequest = (url: string): void => {
