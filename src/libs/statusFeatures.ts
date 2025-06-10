@@ -59,7 +59,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
 
   awaiting_search: async (messageText, uuid) => {
     users[uuid].status = "hold";
-    if (!users[uuid].Variables.searchParams?.field) {
+    if (
+      !users[uuid].Variables.searchParams ||
+      !users[uuid].Variables.searchParams.field
+    ) {
       const validFields = ["編號", "英文名稱", "中文名稱", "種類"] as const;
       const matchedField = validFields.find((field) =>
         messageText.includes(field)
@@ -425,7 +428,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
               },
             ]
       ) as ReturnType<MessageHandler>;
-    } catch (error) {
+    } catch {
       users[uuid].status = "normal";
       return [
         {
@@ -471,7 +474,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
           text: `${users[uuid].data.nickname} 算你有品味😉`,
         },
       ];
-    } catch (error) {
+    } catch {
       users[uuid].status = "normal";
       return [
         {
