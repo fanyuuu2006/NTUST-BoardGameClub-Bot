@@ -32,5 +32,7 @@ const _handleEvent = async (
   
   await getUserData(uuid); // 取得用戶資料
 
-  return lineClient.replyMessage(event.replyToken,  await messageHandler(messageText, uuid));
+  const messages = await messageHandler(messageText, uuid);
+
+  return await lineClient.replyMessage(event.replyToken, messages);
 };
