@@ -17,7 +17,7 @@ export const messageHandler: MessageHandler = async (
     return [{ type: "text", text: users[uuid].status }];
   }
 
-  return await statusFeatures[users[uuid].status](uuid, messageText);
+  return statusFeatures[users[uuid].status](uuid, messageText);
 };
 
 export const sendGetRequest = (url: string): void => {
