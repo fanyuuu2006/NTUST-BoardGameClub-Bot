@@ -24,7 +24,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       needAllow,
     } of keywordItems) {
       if (messageText.toLowerCase().includes(keyword)) {
-        users[uuid].status = "normal";
         if (menberOnly && !(uuid in users)) {
           return [{ type: "text", text: "❌請先註冊，只有社員才能使用此功能" }];
         }
