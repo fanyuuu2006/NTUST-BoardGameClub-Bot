@@ -30,10 +30,7 @@ const _handleEvent = async (
   const messageText: string = event.message.text; // 訊息文字
   const uuid: string = event.source.userId; // 用戶 ID
   
-  getUserData(uuid); // 取得用戶資料
+  await getUserData(uuid); // 取得用戶資料
 
-
-  const messages = await messageHandler(messageText, uuid);
-
-  return lineClient.replyMessage(event.replyToken, messages);
+  return lineClient.replyMessage(event.replyToken,  await messageHandler(messageText, uuid));
 };
