@@ -1,12 +1,18 @@
+import { departments } from "../libs/index";
+import { AssetsField } from "./sheets";
+
+type Permission = "先人" | "幹部" | "社員";
+type Department = (typeof departments)[number];
+
 type UserData = {
   uuid: string; // UUID
-  name: string; // 姓名
-  nickname: string; // 暱稱
-  studentID: string; // 學號
-  department: string; // 科系
-  grade: string; // 年級
-  phonenumber: string; // 電話
-  permission: string; // 權限
+  name: string | null; // 姓名
+  nickname: string | null; // 暱稱
+  studentID: string | null; // 學號
+  department: Department | null; // 科系
+  grade: string | null; // 年級
+  phonenumber: string | null; // 電話
+  permission: Permission | null; // 權限(角色)
 };
 
 // 狀態
@@ -34,11 +40,9 @@ export type User = {
   status: Status;
   // 佔存的資料變數
   Variables: {
-    searchParams: { field: string | null; value: string | null };
+    searchParams: { field: AssetsField; value: string } | null;
     page: number;
     game: string[] | null;
     userData: Partial<Record<keyof UserData | "registerkey", string>>;
   };
 };
-
-export const users: Record<string, User> = {};
