@@ -21,7 +21,7 @@ export const searchFieldInSheet = async (
   const matchRows = rows.filter((row) =>
     conditions.every(({ field, value }) => {
       const index = assetsFields.indexOf(field);
-      return row[index] && row[index] === value;
+      return row[index] && row[index].includes(value);
     })
   );
 
