@@ -322,7 +322,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     ];
   },
 
-  on: (uuid: string) => {
+  on: (_, uuid: string) => {
     setAllow(true);
     users[uuid].status = "normal";
     return [
@@ -333,7 +333,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     ];
   },
 
-  off: (uuid: string) => {
+  off: (_, uuid: string) => {
     setAllow(false);
     users[uuid].status = "normal";
     return [
