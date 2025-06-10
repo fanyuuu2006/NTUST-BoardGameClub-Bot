@@ -226,7 +226,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     ] as ReturnType<MessageHandler>;
   },
 
-  還遊戲: async (uuid: string) => {
+  還遊戲: async (_, uuid: string) => {
     users[uuid].status = "awaiting_returnid";
 
     const borrowedGames = await searchFieldInSheet(
