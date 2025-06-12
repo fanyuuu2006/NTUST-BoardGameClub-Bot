@@ -1,7 +1,16 @@
 import { sheets } from "../configs/googleapis";
 import { schoolYear, users } from "../libs/index";
 import { assetsFields } from "../libs/sheets";
-import { AssetsField } from "../types/sheets";
+import { AssetsField, AssetsSheetRow } from "../types/assets";
+
+export const getAssetsRows = async (): Promise<AssetsSheetRow[]> => {
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.GOOGLE_SHEET_ID,
+    range: `${schoolYear}社產清單!A:M`,
+  });
+  const rows = response.data.values as AssetsSheetRow[];
+  return rows;
+};
 
 // 自訂搜尋函數 可指定試算表中欄位搜尋特定資料
 export const searchFieldInSheet = async (

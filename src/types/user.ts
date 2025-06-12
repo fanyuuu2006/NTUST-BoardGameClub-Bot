@@ -1,5 +1,5 @@
 import { departments } from "../libs/index";
-import { AssetsField } from "./sheets";
+import { AssetsField } from "./assets";
 
 type Permission = "先人" | "幹部" | "社員";
 type Department = (typeof departments)[number];
