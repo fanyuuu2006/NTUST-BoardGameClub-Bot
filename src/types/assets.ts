@@ -49,3 +49,4 @@ type AvailableGame = _BaseBoardGame & {
 };
 
 export type BoardGame = BorrowedGame | AvailableGame;
+

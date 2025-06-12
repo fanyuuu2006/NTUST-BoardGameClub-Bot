@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { getBoardGames } from "../controllers/assets";
+import { getAssets, getAssetsSearch } from "../controllers/assets";
 
 export const router = Router();
 
-router.get("/", getBoardGames);
+router.get("/", getAssets);
+router.get("/search", getAssetsSearch);
