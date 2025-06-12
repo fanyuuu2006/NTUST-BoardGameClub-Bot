@@ -24,8 +24,8 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
   }
 
   const matchBoardGames = await getBoardGamesByCondition({
-    field: field as AssetsField,
-    value,
+    field: field.trim() as AssetsField,
+    value: value.trim(),
   });
 
   res.status(200).json({ data: matchBoardGames });

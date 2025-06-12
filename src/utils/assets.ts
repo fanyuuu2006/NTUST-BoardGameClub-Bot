@@ -57,7 +57,7 @@ export const getBoardGamesByCondition = async ({
   const rows = await getAssetsRows();
   const matchRows = rows.filter((row) => {
     const index = assetsFields.indexOf(field);
-    return row[index] && row[index].includes(value);
+    return row[index] && row[index].toLowerCase().includes(value.toLowerCase());
   });
   return getBoardGames(matchRows);
 };
