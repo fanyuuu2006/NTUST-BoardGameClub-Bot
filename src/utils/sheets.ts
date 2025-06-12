@@ -9,7 +9,7 @@ export const getAssetsRows = async (): Promise<AssetsSheetRow[]> => {
     range: `${schoolYear}社產清單!A:M`,
   });
   const rows = response.data.values as AssetsSheetRow[];
-  return rows;
+  return rows.slice(1); // skip header row
 };
 
 // 自訂搜尋函數 可指定試算表中欄位搜尋特定資料
