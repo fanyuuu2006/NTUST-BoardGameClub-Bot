@@ -1,7 +1,13 @@
 import { Router } from "express";
-import { getAssets, getAssetsSearch } from "../controllers/assets";
+import {
+  getAssetById,
+  getAssets,
+  getAssetsSearch,
+} from "../controllers/assets";
 
 export const router = Router();
 
-router.get("/", getAssets);
-router.get("/search", getAssetsSearch);
+router
+  .get("/", getAssets)
+  .get("/search", getAssetsSearch)
+  .get("/:id", getAssetById);

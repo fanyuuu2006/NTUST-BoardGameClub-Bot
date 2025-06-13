@@ -2,7 +2,7 @@ export const assetsFields = [
   "編號", // A
   "英文名稱", // B
   "中文名稱", // C
-  "種類",  // D
+  "種類", // D
   "借用", // E
   "借用人", // F
   "位置", // G
@@ -13,3 +13,5 @@ export const assetsFields = [
   "狀態(牌套)", // L
   "清點備註", // M
 ] as const;
+
+export const assetsPositions = ["A", "B", "C", "D"] as const;

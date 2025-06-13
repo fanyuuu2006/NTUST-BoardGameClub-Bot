@@ -1,4 +1,5 @@
-import { assetsFields } from "../libs/sheets";
+import { isEqual } from "./index";
+import { assetsFields, assetsPositions } from "../libs/sheets";
 import {
   AssetsField,
   AssetsSheetRow,
@@ -6,6 +7,13 @@ import {
   Position,
 } from "../types/assets";
 import { getAssetsRows } from "./sheets";
+
+export const isPosition = (value: string): value is Position => {
+  return assetsPositions.includes(value as Position);
+};
+export const isAssetsField = (value: string): value is AssetsField => {
+  return assetsFields.includes(value as AssetsField);
+};
 
 export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
   const id = parseInt(row[0]);
@@ -15,7 +23,7 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
   };
   const type = row[3];
   const borrowed = row[4] === "V";
-  const position = row[6] as Position;
+  const position = isPosition(row[6]) ? row[6] : undefined;
   const inventory = row[7] === "V";
   const status: BoardGame["status"] = {
     shrinkWrap: row[8],
@@ -62,17 +70,22 @@ export const getBoardGamesByCondition = async ({
   return getBoardGames(matchRows);
 };
 
-export const findBoardGameById = async (
-  id: BoardGame["id"]
+export const findBoardGame = async <T extends keyof BoardGame>(
+  field: T,
+  value: BoardGame[T]
 ): Promise<{
   boardGame?: BoardGame;
   sheetsIndex?: number;
 }> => {
   const rows = await getAssetsRows();
   const boardgames = getBoardGames(rows);
-  const index = boardgames.findIndex((game) => game.id === id);
-  if (index === -1) return {};
 
+  const index = boardgames.findIndex((game) => {
+    const targetValue = game[field];
+    return isEqual(targetValue, value);
+  });
+
+  if (index === -1) return {};
   return {
     boardGame: boardgames[index],
     sheetsIndex: index + 2,

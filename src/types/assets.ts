@@ -1,4 +1,4 @@
-import { assetsFields } from "../libs/sheets";
+import { assetsFields, assetsPositions } from "../libs/sheets";
 
 export type AssetsSheetRow = [
   string,
@@ -18,7 +18,7 @@ export type AssetsSheetRow = [
 
 export type AssetsField = (typeof assetsFields)[number];
 
-export type Position = "A" | "B" | "C" | "D";
+export type Position = (typeof assetsPositions)[number];
 
 type _BaseBoardGame = {
   id: number;

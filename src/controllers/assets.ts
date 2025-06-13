@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { getAssetsRows } from "../utils/sheets";
-import { getBoardGamesByCondition, parseBoardGame } from "../utils/assets";
+import {
+  findBoardGame,
+  getBoardGamesByCondition,
+  parseBoardGame,
+} from "../utils/assets";
 import { assetsFields } from "../libs/sheets";
 import { AssetsField } from "../types/assets";
 
@@ -29,4 +33,21 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
   });
 
   res.status(200).json({ data: matchBoardGames });
+};
+
+export const getAssetById = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "無效的 ID", data: [] });
+    return;
+  }
+
+  const { boardGame } = await findBoardGame("id", id);
+
+  if (!boardGame) {
+    res.status(404).json({ error: "找不到對應的社產", data: [] });
+    return;
+  }
+
+  res.status(200).json({ data: [boardGame] });
 };
