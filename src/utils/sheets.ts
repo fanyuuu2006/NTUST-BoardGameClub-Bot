@@ -12,6 +12,35 @@ export const getAssetsRows = async (): Promise<AssetsSheetRow[]> => {
   return rows.slice(1); // skip header row
 };
 
+export const updateAssetsRow = async (
+  row: AssetsSheetRow,
+  sheetsIndex: number
+): Promise<{
+  err?: unknown;
+}> => {
+  try {
+    const response = await sheets.spreadsheets.values.update({
+      spreadsheetId: process?.env?.GOOGLE_SHEET_ID,
+      range: `${schoolYear}社產清單!A${sheetsIndex}:M${sheetsIndex}`,
+      valueInputOption: "RAW",
+      requestBody: {
+        values: [row],
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`更新社產清單失敗，狀態碼: ${response.status}`);
+    }
+
+    return {};
+  } catch (err) {
+    console.error(err);
+    return {
+      err,
+    };
+  }
+};
+
 // 自訂搜尋函數 可指定試算表中欄位搜尋特定資料
 export const searchFieldInSheet = async (
   conditions: {

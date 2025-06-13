@@ -6,3 +6,4 @@ keygeneretor.py
 index copy.js
 credentials.json
 dist/
+.env.local

@@ -3,10 +3,13 @@ import { getAssetsRows } from "../utils/sheets";
 import {
   findBoardGame,
   getBoardGamesByCondition,
+  isAssetsField,
   parseBoardGame,
+  updateBoardGame,
 } from "../utils/assets";
 import { assetsFields } from "../libs/sheets";
 import { AssetsField } from "../types/assets";
+import { updaters } from "../libs/assets";
 
 export const getAssets = async (_: Request, res: Response) => {
   const rows = await getAssetsRows();
@@ -38,11 +41,37 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
 export const getAssetById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
-    res.status(400).json({ error: "無效的 ID", data: [] });
+    res.status(400).json({ error: `無效的 ID: ${id}`, data: [] });
     return;
   }
 
   const { boardGame } = await findBoardGame("id", id);
+
+  if (!boardGame) {
+    res.status(404).json({ error: "找不到對應的社產", data: [] });
+    return;
+  }
+
+  res.status(200).json({ data: [boardGame] });
+};
+
+export const patchAssetById = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const { field, value } = req.body;
+
+  if (isNaN(id)) {
+    res.status(400).json({ error: `無效的 ID: ${id}`, data: [] });
+    return;
+  }
+
+  if (!isAssetsField(field)) {
+    res.status(400).json({ error: `無效的欄位: ${field}`, data: [] });
+    return;
+  }
+
+  const { boardGame } = await updateBoardGame(id, (prev) =>
+    updaters[field](prev, value)
+  );
 
   if (!boardGame) {
     res.status(404).json({ error: "找不到對應的社產", data: [] });

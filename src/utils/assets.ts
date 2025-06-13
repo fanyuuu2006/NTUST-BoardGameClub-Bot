@@ -6,7 +6,7 @@ import {
   BoardGame,
   Position,
 } from "../types/assets";
-import { getAssetsRows } from "./sheets";
+import { getAssetsRows, updateAssetsRow } from "./sheets";
 
 export const isPosition = (value: string): value is Position => {
   return assetsPositions.includes(value as Position);
@@ -89,5 +89,45 @@ export const findBoardGame = async <T extends keyof BoardGame>(
   return {
     boardGame: boardgames[index],
     sheetsIndex: index + 2,
+  };
+};
+
+export const updateBoardGame = async (
+  id: BoardGame["id"],
+  updater: (prev: BoardGame) => BoardGame
+): Promise<{
+  ok: boolean;
+  boardGame?: BoardGame;
+}> => {
+  const { boardGame, sheetsIndex } = await findBoardGame("id", id);
+
+  if (!boardGame || !sheetsIndex) return { ok: false };
+
+  const updatedGame = updater(boardGame);
+
+  // 將 updatedGame 轉回 AssetsSheetRow 格式
+  const updatedRow: AssetsSheetRow = [
+    String(updatedGame.id),
+    updatedGame.name.english,
+    updatedGame.name.chinese,
+    updatedGame.type,
+    updatedGame.borrowed ? "V" : "",
+    updatedGame.borrower || "",
+    updatedGame.position || "",
+    updatedGame.inventory ? "V" : "",
+    updatedGame.status.shrinkWrap,
+    updatedGame.status.appearance,
+    updatedGame.status.missingParts,
+    updatedGame.status.sleeves,
+    updatedGame.note || "",
+  ];
+
+  const { err } = await updateAssetsRow(updatedRow, sheetsIndex);
+
+  if (err) return { ok: false };
+
+  return {
+    ok: true,
+    boardGame: updatedGame,
   };
 };
