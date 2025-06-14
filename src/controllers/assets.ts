@@ -74,7 +74,7 @@ export const patchAssetById = async (req: Request, res: Response) => {
   );
 
   if (!ok) {
-    res.status(404).json({ error: "修改社產失敗", data: [] });
+    res.status(400).json({ error: "修改社產失敗", data: [] });
   }
 
   res.status(200).json({ data: [boardGame] });
