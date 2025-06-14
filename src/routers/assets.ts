@@ -5,6 +5,7 @@ import {
   getAssetsSearch,
   patchAssetById,
 } from "../controllers/assets";
+import { authorizationMiddleware } from "../middlewares/authorzation";
 
 export const router = Router();
 
@@ -12,4 +13,4 @@ router
   .get("/", getAssets)
   .get("/search", getAssetsSearch)
   .get("/:id", getAssetById)
-  .patch("/:id", patchAssetById);
+  .patch("/:id", authorizationMiddleware, patchAssetById);
