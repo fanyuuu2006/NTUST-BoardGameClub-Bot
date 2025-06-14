@@ -4,7 +4,6 @@ import { router as webhookRouter } from "./routers/webhook";
 import { router as assetsRouter } from "./routers/assets";
 
 const app = express();
-app.use(express.json()); 
 app.use("/webhook", webhookRouter);
 app.use("/assets", assetsRouter);
 app.use("/", (_, res) => {
