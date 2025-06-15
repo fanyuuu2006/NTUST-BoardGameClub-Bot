@@ -36,15 +36,15 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     } of keywordItems) {
       if (messageText.toLowerCase().includes(keyword)) {
         if (menberOnly && !isMember) {
-          users[uuid].status = "normal"
+          users[uuid].status = "normal";
           return [{ type: "text", text: "❌請先註冊，只有社員才能使用此功能" }];
         }
         if (permissionStrict && users[uuid].isManager()) {
-          users[uuid].status = "normal"
+          users[uuid].status = "normal";
           return [{ type: "text", text: "❌想做什麼，只有幹部才能使用此功能" }];
         }
         if (needAllow && !getAllow() && users[uuid].isManager()) {
-          users[uuid].status = "normal"
+          users[uuid].status = "normal";
           return [{ type: "text", text: "❌我同事沒有許可可是不行的喔~" }];
         }
         return kewordFeatures[keyword](messageText, uuid);
@@ -650,7 +650,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         return [
           {
             type: "text",
-            text: "❌錯誤 我壞掉了😵\n請重新註冊一次",
+            text: `❌錯誤 我壞掉了😵\n請重新註冊一次\n${users[uuid].registerkey}`,
           },
         ];
       }
