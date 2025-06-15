@@ -1,15 +1,10 @@
 import { Request, Response } from "express";
-import { getAssetsRows } from "../utils/sheets";
-import {
-  findBoardGame,
-  getBoardGamesByCondition,
-  parseBoardGame,
-} from "../utils/assets";
-import { assetsFields } from "../libs/sheets";
-import { AssetsField } from "../types/assets";
+import { assetsSheetFields } from "../libs/sheets";
+import { parseBoardGame, getBoardGamesByCondition, findBoardGame, getAssetsSheetRows } from "../utils/sheets";
+import { AssetsSheetField } from "../types/sheets";
 
 export const getAssets = async (_: Request, res: Response) => {
-  const rows = await getAssetsRows();
+  const rows = await getAssetsSheetRows();
   const boardgames = rows.map((row) => parseBoardGame(row));
   res.status(200).json({ data: boardgames });
 };
@@ -22,15 +17,19 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
     return;
   }
 
-  if (!assetsFields.includes(field as AssetsField)) {
+  if (!assetsSheetFields.includes(field as AssetsSheetField)) {
     res.status(400).json({ error: `無效的欄位: ${field}`, data: [] });
     return;
   }
 
   const matchBoardGames = await getBoardGamesByCondition({
-    field: field.trim() as AssetsField,
-    value: value.trim(),
+    field: field as AssetsSheetField,
+    value: value,
   });
+
+  if (matchBoardGames.length === 0) {
+    res.status(404).json({ error: `找不到符合查詢條件的社產`, data: [] });
+  }
 
   res.status(200).json({ data: matchBoardGames });
 };
