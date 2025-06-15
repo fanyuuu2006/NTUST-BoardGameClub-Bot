@@ -64,7 +64,7 @@ export class User {
     this.phonenumber = row[6];
     this.registerkey = row[7];
     this.permission = row[8];
-    this.#signInCount = parseInt(row[9]);
+    this.#signInCount = parseInt(row[9]) || 0;
     this.#lastSignInTime = row[10] ? new Date(row[10]) : undefined;
   }
 
