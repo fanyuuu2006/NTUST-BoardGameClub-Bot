@@ -166,29 +166,34 @@ export const findMember = async <T extends keyof User>(
   };
 };
 
-export const updateAssetsSheetRow = async (
-  id: BoardGame["id"]
+export const updateAssetsSheetRow = async <T extends keyof BoardGame>(
+  findOption: {
+    field: T;
+    value: BoardGame[T];
+  },
+  boardgame: BoardGame
 ): Promise<{
   err?: unknown;
 }> => {
-  const { boardGame, sheetsIndex } = await findBoardGame("id", id);
-  if (!boardGame || !sheetsIndex) return { err: `找不到對應的社產: ${id}` };
+  const { field, value } = findOption;
+  const { sheetsIndex } = await findBoardGame(field, value);
+  if (!sheetsIndex) return { err: `找不到對應的社產 ${field}: ${value}` };
 
   const row: AssetsSheetRow = [
-    boardGame.id.toString(),
-    boardGame.name.english,
-    boardGame.name.chinese,
-    boardGame.type,
-    boardGame.borrowed ? "V" : "",
-    boardGame.borrower || "",
-    boardGame.position || "",
-    boardGame.inventory ? "V" : "",
-    boardGame.status.shrinkWrap,
-    boardGame.status.appearance,
-    boardGame.status.missingParts,
-    boardGame.status.sleeves,
-    boardGame.note || "",
-    boardGame.recommendedCounts.toString(),
+    boardgame.id.toString(),
+    boardgame.name.english,
+    boardgame.name.chinese,
+    boardgame.type,
+    boardgame.borrowed ? "V" : "",
+    boardgame.borrower || "",
+    boardgame.position || "",
+    boardgame.inventory ? "V" : "",
+    boardgame.status.shrinkWrap,
+    boardgame.status.appearance,
+    boardgame.status.missingParts,
+    boardgame.status.sleeves,
+    boardgame.note || "",
+    boardgame.recommendedCounts.toString(),
   ];
 
   try {
@@ -217,28 +222,32 @@ export const updateAssetsSheetRow = async (
 };
 
 export const updateMemberSheetRow = async <T extends keyof User>(
-  field: T,
-  value: User[T]
+  findOption: {
+    field: T;
+    value: User[T];
+  },
+  uuid: string
 ): Promise<{
   err?: unknown;
 }> => {
-  const { user, sheetsIndex } = await findMember(field, value);
-  if (!user || !sheetsIndex) return { err: `找不到對應的社員: ${value}` };
+  const { field, value } = findOption;
+  const { sheetsIndex } = await findMember(field, value);
+  if (!sheetsIndex) return { err: `找不到對應的社員 ${field}: ${value}` };
 
   const row: MemberSheetRow = [
-    user.uuid,
-    user.name,
-    user.nickname,
-    user.studentID,
-    user.department || "無",
-    user.grade || "無",
-    user.phonenumber,
-    user.registerkey,
-    user.permission,
-    `${user.signInCount}`,
+    users[uuid].uuid,
+    users[uuid].name,
+    users[uuid].nickname,
+    users[uuid].studentID,
+    users[uuid].department || "無",
+    users[uuid].grade || "無",
+    users[uuid].phonenumber,
+    users[uuid].registerkey,
+    users[uuid].permission,
+    `${users[uuid].signInCount}`,
     (() => {
-      if (!user.lastSignInTime) return "";
-      const date = user.lastSignInTime;
+      if (!users[uuid].lastSignInTime) return "";
+      const date = users[uuid].lastSignInTime;
       return (
         date.getFullYear().toString() +
         String(date.getMonth() + 1).padStart(2, "0") +

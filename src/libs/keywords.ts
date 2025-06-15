@@ -125,7 +125,10 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       }
 
       users[uuid].signIn();
-      const { err } = await updateMemberSheetRow("uuid", uuid);
+      const { err } = await updateMemberSheetRow(
+        { field: "uuid", value: uuid },
+        uuid
+      );
 
       if (err) throw err;
 

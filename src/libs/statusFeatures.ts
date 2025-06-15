@@ -223,7 +223,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       matchBoardgame.borrowed = true;
       matchBoardgame.borrower = users[uuid].name;
       users[uuid].status = "normal";
-      const { err } = await updateAssetsSheetRow(matchBoardgame.id);
+      const { err } = await updateAssetsSheetRow(
+        { field: "id", value: matchBoardgame.id },
+        matchBoardgame
+      );
       if (err) {
         throw err;
       }
@@ -303,7 +306,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       matchBoardgame.borrowed = false;
       matchBoardgame.borrower = undefined;
 
-      const { err } = await updateAssetsSheetRow(matchBoardgame.id);
+      const { err } = await updateAssetsSheetRow(
+        { field: "id", value: matchBoardgame.id },
+        matchBoardgame
+      );
 
       if (err) {
         throw err;
@@ -446,7 +452,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
 
       const matchBoardGame = matchBoardGames[0];
       matchBoardGame.recommendedCounts += 1;
-      const { err } = await updateAssetsSheetRow(matchBoardGame.id);
+      const { err } = await updateAssetsSheetRow(
+        { field: "id", value: matchBoardGame.id },
+        matchBoardGame
+      );
 
       if (err) {
         throw err;
@@ -655,7 +664,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         ];
       }
       // 將註冊資料上傳
-      const { err } = await updateMemberSheetRow("registerkey", users[uuid].registerkey);
+      const { err } = await updateMemberSheetRow(
+        { field: "registerkey", value: users[uuid].registerkey },
+        uuid
+      );
       if (err) {
         throw err;
       }
