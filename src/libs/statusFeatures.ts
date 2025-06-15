@@ -655,7 +655,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         ];
       }
       // 將註冊資料上傳
-      const { err } = await updateMemberSheetRow(users[uuid].uuid);
+      const { err } = await updateMemberSheetRow("uuid", users[uuid].uuid);
       if (err) {
         throw err;
       }

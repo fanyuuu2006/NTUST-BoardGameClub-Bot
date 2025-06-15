@@ -216,13 +216,14 @@ export const updateAssetsSheetRow = async (
   }
 };
 
-export const updateMemberSheetRow = async (
-  uuid: User["uuid"]
+export const updateMemberSheetRow = async <T extends keyof User>(
+  field: T,
+  value: User[T]
 ): Promise<{
   err?: unknown;
 }> => {
-  const { user, sheetsIndex } = await findMember("uuid", uuid);
-  if (!user || !sheetsIndex) return { err: `找不到對應的社員: ${uuid}` };
+  const { user, sheetsIndex } = await findMember(field, value);
+  if (!user || !sheetsIndex) return { err: `找不到對應的社員: ${value}` };
 
   const row: MemberSheetRow = [
     user.uuid,

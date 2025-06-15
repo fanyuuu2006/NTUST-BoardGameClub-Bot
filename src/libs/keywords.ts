@@ -125,7 +125,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       }
 
       users[uuid].signIn();
-      const { err } = await updateMemberSheetRow(uuid);
+      const { err } = await updateMemberSheetRow("uuid", uuid);
 
       if (err) throw err;
 
