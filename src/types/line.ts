@@ -36,5 +36,5 @@ export interface LineRequest extends Request {
 
 export type MessageHandler = (
   messageText: string,
-  uuid: User["data"]["uuid"]
+  uuid: User["uuid"]
 ) => line.Message[] | Promise<line.Message[]>;

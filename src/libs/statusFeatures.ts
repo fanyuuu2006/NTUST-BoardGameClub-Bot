@@ -5,7 +5,7 @@ import { dialog } from "./dialog";
 import { kewordFeatures, keywordItems } from "./keywords";
 import { searchFieldInSheet } from "../utils/sheets";
 import { sheets } from "../configs/googleapis";
-import { sendGetRequest } from "../utils";
+import { sendGetRequest } from "../utils/custom";
 
 export const statusFeatures: Record<User["status"], MessageHandler> = {
   hold: (_, uuid) => [

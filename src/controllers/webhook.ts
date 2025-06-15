@@ -1,8 +1,26 @@
 import { Response } from "express";
-import { LineRequest, MessageEvent } from "../types/line";
+import { LineRequest, MessageEvent, MessageHandler } from "../types/line";
 import line, { lineClient } from "../configs/line";
-import { getUserData } from "../utils/user";
-import { messageHandler } from "../utils/index";
+import { users } from "../libs";
+import { statusFeatures } from "../libs/statusFeatures";
+import { getUserData } from "../utils/sheets";
+
+export const messageHandler: MessageHandler = async (
+  messageText: string,
+  uuid: string
+) => {
+  if (messageText === "重置") {
+    delete users[uuid];
+    return [{ type: "text", text: "🔄重置成功" }];
+  }
+
+  // Debug 用
+  if (messageText === "狀態") {
+    return [{ type: "text", text: users[uuid].status }];
+  }
+
+  return statusFeatures[users[uuid].status](messageText, uuid);
+};
 
 export const main = async (req: LineRequest, res: Response) => {
   const events = req.body.events;

@@ -1,19 +1,9 @@
-import { departments } from "../libs/index";
-import { AssetsField } from "./assets";
-
-type Permission = "先人" | "幹部" | "社員";
-type Department = (typeof departments)[number];
-
-type UserData = {
-  uuid: string; // UUID
-  name: string | null; // 姓名
-  nickname: string | null; // 暱稱
-  studentID: string | null; // 學號
-  department: Department | null; // 科系
-  grade: string | null; // 年級
-  phonenumber: string | null; // 電話
-  permission: Permission | null; // 權限(角色)
-};
+import {
+  AssetsSheetField,
+  Department,
+  MemberSheetRow,
+  Permission,
+} from "./sheets";
 
 // 狀態
 type Status =
@@ -35,14 +25,56 @@ type Status =
   | "awaiting_grade" // 等待輸入年級
   | "awaiting_phonenumber"; // 等待輸入電話
 
-export type User = {
-  data: UserData;
-  status: Status;
-  // 佔存的資料變數
-  Variables: {
-    searchParams: { field: AssetsField; value: string } | null;
+export class User {
+  #uuid: string; // UUID
+  name: string; // 姓名
+  nickname: string; // 暱稱
+  studentID: string; // 學號
+  department: Department; // 科系
+  grade: string; // 年級
+  phonenumber: string; // 電話
+  registerkey: string; // 註冊序號
+  signInCount: number = 0; // 簽到次數
+  // 最近簽到時間
+  #lastSignInTime?: Date;
+  permission: Permission = "社員"; // 權限(角色)
+  status: Status = "normal";
+
+  variables: {
+    searchParams?: {
+      field?: AssetsSheetField;
+      value?: string;
+    };
+    game?: string[];
     page: number;
-    game: string[] | null;
-    userData: Partial<Record<keyof UserData | "registerkey", string>>;
+  } = {
+    page: 0,
   };
-};
+
+  constructor(row: MemberSheetRow) {
+    this.#uuid = row[0];
+    this.name = row[1];
+    this.nickname = row[2];
+    this.studentID = row[3];
+    this.department = row[4];
+    this.grade = row[5];
+    this.phonenumber = row[6];
+    this.registerkey = row[7];
+    this.permission = row[8];
+    this.signInCount = parseInt(row[9]);
+    this.#lastSignInTime = row[10] ? new Date(row[10]) : undefined;
+  }
+
+  get uuid() {
+    return this.#uuid;
+  }
+
+  signIn(): void {
+    this.signInCount += 1;
+    this.#lastSignInTime = new Date();
+  }
+
+  get lastSignInTime(): Date | undefined {
+    return this.#lastSignInTime;
+  }
+}
