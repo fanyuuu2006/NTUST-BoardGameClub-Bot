@@ -142,8 +142,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   },
 
   // 自動註冊(因為我們窮有時候他會卡卡的，這時候可以繼續照順序輸入資料或使用手動註冊就可以了)
-  註冊: (_, uuid: string) => {
-    if (uuid in users) {
+  註冊: async (_, uuid: string) => {
+    const isMember = await users[uuid].isMember();
+    if (isMember) {
       users[uuid].status = "normal";
       return [
         {
