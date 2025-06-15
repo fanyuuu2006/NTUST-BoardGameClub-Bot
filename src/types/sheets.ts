@@ -4,13 +4,17 @@ import {
   permissions,
   departments,
   memberSheetFields,
+  grades,
 } from "../libs/sheets";
+import { Nullable } from "./custom";
 
 export type Permission = (typeof permissions)[number];
 
 export type Department = (typeof departments)[number];
+export type Grade = (typeof grades)[number];
 
 export type AssetsSheetRow = [
+  string,
   string,
   string,
   string,
@@ -49,6 +53,7 @@ export type BoardGame = {
   note?: string;
   borrowed: boolean;
   borrower?: string;
+  recommendedCounts: number;
 };
 
 // A ~ J
@@ -57,8 +62,8 @@ export type MemberSheetRow = [
   string,
   string,
   string,
-  Department,
-  string,
+  Department | Nullable,
+  Grade | Nullable,
   string,
   string,
   Permission,

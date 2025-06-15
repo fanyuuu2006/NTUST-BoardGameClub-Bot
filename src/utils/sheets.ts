@@ -1,11 +1,18 @@
 import { isEqual } from "./custom";
 import { sheets } from "../configs/googleapis";
 import { schoolYear, users } from "../libs/index";
-import { assetsPositions, assetsSheetFields } from "../libs/sheets";
+import {
+  assetsPositions,
+  assetsSheetFields,
+  departments,
+  grades,
+} from "../libs/sheets";
 import {
   AssetsSheetField,
   AssetsSheetRow,
   BoardGame,
+  Department,
+  Grade,
   MemberSheetRow,
   Position,
 } from "../types/sheets";
@@ -14,6 +21,15 @@ import { User } from "../types/user";
 export const isPosition = (value: string): value is Position => {
   return assetsPositions.includes(value as Position);
 };
+
+export const isDepartment = (value: string): value is Department => {
+  return departments.includes(value as Department);
+};
+
+export const isGrade = (value: string): value is Grade => {
+  return grades.includes(value as Grade);
+};
+
 export const isAssetsSheetField = (
   value: string
 ): value is AssetsSheetField => {
@@ -23,7 +39,7 @@ export const isAssetsSheetField = (
 export const getAssetsSheetRows = async (): Promise<AssetsSheetRow[]> => {
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: `${schoolYear}社產清單!A:M`,
+    range: `${schoolYear}社產清單!A:N`,
   });
   const rows = response.data.values as AssetsSheetRow[];
   if (!rows) return [];
@@ -72,6 +88,7 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
     sleeves: row[11],
   };
   const note = row[12];
+  const recommendedCounts = parseInt(row[13]);
   return {
     id,
     name,
@@ -88,6 +105,7 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
       : {
           borrowed,
         }),
+    recommendedCounts,
   };
 };
 
@@ -100,10 +118,13 @@ export const getBoardGamesByCondition = async ({
 }): Promise<BoardGame[]> => {
   const rows = await getAssetsSheetRows();
   const matchRows = rows.filter((row) => {
-    const index = assetsSheetFields.indexOf(field);
-    return row[index] && row[index].toLowerCase().includes(value.toLowerCase());
+    const index = assetsSheetFields.indexOf(field.trim() as AssetsSheetField);
+    return (
+      row[index] &&
+      row[index].toLowerCase().includes(value.trim().toLowerCase())
+    );
   });
-  return matchRows.map(parseBoardGame);
+  return matchRows.map(parseBoardGame).sort((a, b) => a.id - b.id);
 };
 
 export const findBoardGame = async <T extends keyof BoardGame>(
@@ -172,6 +193,7 @@ export const updateAssetsSheetRow = async (
     boardGame.status.missingParts,
     boardGame.status.sleeves,
     boardGame.note || "",
+    boardGame.recommendedCounts.toString(),
   ];
 
   try {
@@ -212,8 +234,8 @@ export const updateMemberSheetRow = async (
     user.name,
     user.nickname,
     user.studentID,
-    user.department,
-    user.grade,
+    user.department || "無",
+    user.grade || "無",
     user.phonenumber,
     user.registerkey,
     user.permission,
@@ -260,8 +282,8 @@ export const initUser = (uuid: string) => {
     "",
     "",
     "",
-    "其他",
-    "",
+    "無",
+    "無",
     "",
     "",
     "社員",
@@ -272,26 +294,27 @@ export const initUser = (uuid: string) => {
   users[user.uuid] = user;
 };
 
-export const boardgameToString=(boardgame: BoardGame, uuid: string): string=>{
-  const isManager = users[uuid].permission !== "社員";
+export const boardgameToString = (
+  boardgame: BoardGame,
+  uuid: string
+): string => {
   return [
-      `編號: ${boardgame.id}`,
-      `英文名稱: ${boardgame.name.english}`,
-      `中文名稱: ${boardgame.name.chinese}`,
-      `種類: ${boardgame.type}`,
-      `借用: ${boardgame.borrowed ? "已借出" : "未借出"}`,
-      isManager ? `借用人: ${boardgame.borrower}` : null,
-      `位置: ${boardgame.position || "無紀錄"}`,
-      `狀態(外膜): ${boardgame.status.shrinkWrap || "無紀錄"}`,
-      `狀態(外觀): ${boardgame.status.appearance || "無紀錄"}`,
-      `狀態(缺件): ${boardgame.status.missingParts || "無紀錄"}`,
-      `狀態(牌套): ${boardgame.status.sleeves || "無紀錄"}`,
-      `備註: ${boardgame.note || "無"}`,
-    ]
-      .filter(Boolean) // 過濾掉 null 值（非幹部借用人）
-      .join("\n")
-
-}
+    `編號: ${boardgame.id}`,
+    `英文名稱: ${boardgame.name.english}`,
+    `中文名稱: ${boardgame.name.chinese}`,
+    `種類: ${boardgame.type}`,
+    `借用: ${boardgame.borrowed ? "已借出" : "未借出"}`,
+    users[uuid].isManager() ? `借用人: ${boardgame.borrower}` : null,
+    `位置: ${boardgame.position || "無紀錄"}`,
+    `狀態(外膜): ${boardgame.status.shrinkWrap || "無紀錄"}`,
+    `狀態(外觀): ${boardgame.status.appearance || "無紀錄"}`,
+    `狀態(缺件): ${boardgame.status.missingParts || "無紀錄"}`,
+    `狀態(牌套): ${boardgame.status.sleeves || "無紀錄"}`,
+    `備註: ${boardgame.note || "無"}`,
+  ]
+    .filter(Boolean) // 過濾掉 null 值（非幹部借用人）
+    .join("\n");
+};
 
 // // 自訂搜尋函數 可指定試算表中欄位搜尋特定資料
 // export const searchFieldInSheet = async (

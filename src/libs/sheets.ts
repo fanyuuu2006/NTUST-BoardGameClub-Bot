@@ -16,6 +16,7 @@ export const assetsSheetFields = [
   "狀態(缺件)", // K
   "狀態(牌套)", // L
   "清點備註", // M
+  "被推薦次數", // N
 ] as const;
 
 export const departments = [
@@ -35,6 +36,8 @@ export const departments = [
   "不分系學士班",
   "其他",
 ] as const;
+
+export const grades = ["一", "二", "三", "四", "碩一", "碩二"] as const;
 
 export const memberSheetFields = [
   "UUID", // A

@@ -23,9 +23,13 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
   }
 
   const matchBoardGames = await getBoardGamesByCondition({
-    field: field.trim() as AssetsSheetField,
-    value: value.trim(),
+    field: field as AssetsSheetField,
+    value: value,
   });
+
+  if (matchBoardGames.length === 0) {
+    res.status(404).json({ error: `找不到符合查詢條件的社產`, data: [] });
+  }
 
   res.status(200).json({ data: matchBoardGames });
 };

@@ -7,3 +7,5 @@ export type KeywordItem = {
   permissionStrict: boolean;
   needAllow: boolean;
 };
+
+export type Nullable = "無";

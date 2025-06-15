@@ -1,11 +1,14 @@
 import { getAllow, setAllow, users } from ".";
-import { sheets } from "../configs/googleapis";
 import { Keyword, KeywordItem } from "../types/custom";
 import { MessageHandler } from "../types/line";
+import { BoardGame } from "../types/sheets";
+import { isSameDay } from "../utils/custom";
 import {
   boardgameToString,
+  getAssetsSheetRows,
   getBoardGamesByCondition,
   initUser,
+  parseBoardGame,
   updateMemberSheetRow,
 } from "../utils/sheets";
 
@@ -115,12 +118,24 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       return [{ type: "text", text: "社課還沒開始你簽到啥阿❓" }];
     }
     try {
+      if (
+        users[uuid].lastSignInTime &&
+        isSameDay(users[uuid].lastSignInTime, new Date())
+      ) {
+        return [{ type: "text", text: "你今天已經簽到過囉❗️" }];
+      }
+
       users[uuid].signIn();
       const { err } = await updateMemberSheetRow(uuid);
 
-      if (err) throw new Error(err as string);
+      if (err) throw err;
 
-      return [{ type: "text", text: `${users[uuid].nickname}簽到成功🎉` }];
+      return [
+        {
+          type: "text",
+          text: `${users[uuid].nickname || users[uuid].name}簽到成功🎉`,
+        },
+      ];
     } catch (err) {
       console.error(err);
       return [{ type: "text", text: `簽到失敗❌` }];
@@ -300,11 +315,8 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
 
   // 列出熱門桌遊(前十名)
   熱門桌遊: async (_, uuid: string) => {
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID_PUB,
-      range: "桌遊清單!A:E",
-    });
-    const rows = response?.values?.slice(1) as string[][];
+    const row = await getAssetsSheetRows();
+    const boardgames = row.map(parseBoardGame);
     const top10Icon: string[] = [
       "1️⃣",
       "2️⃣",
@@ -317,11 +329,11 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       "9️⃣",
       "🔟",
     ];
-    const top10: string[] = rows.map(
-      (row: string[], i: number) =>
-        `${i < 3 ? "🔥" : ""}${top10Icon[i]}\n 編號: ${row[0]}\n 英文名稱: ${
-          row[1]
-        }\n 中文名稱: ${row[2]}\n 種類: ${row[3]}\n`
+    const top10: string[] = boardgames.map(
+      (game: BoardGame, i: number) =>
+        `${i < 3 ? "🔥" : ""}${top10Icon[i]}\n 編號: ${game.id}\n 英文名稱: ${
+          game.name.english
+        }\n 中文名稱: ${game.name.chinese}\n 種類: ${game.type}\n`
     );
     users[uuid].status = "normal";
     return [
