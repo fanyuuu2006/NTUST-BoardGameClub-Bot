@@ -63,8 +63,8 @@ export const getUserData = async (uuid: string) => {
     row ?? [uuid, "", "", "", "無", "無", "", "", "社員", "0", ""]
   );
   if (users[uuid]) {
-    users[uuid].status = user.status;
-    users[uuid].variables = user.variables;
+    user.status = users[uuid].status;
+    user.variables = users[uuid].variables;
   }
 
   users[uuid] = user;
