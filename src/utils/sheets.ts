@@ -303,6 +303,7 @@ export const boardgameToString = (
     `狀態(缺件): ${boardgame.status.missingParts || "無紀錄"}`,
     `狀態(牌套): ${boardgame.status.sleeves || "無紀錄"}`,
     `備註: ${boardgame.note || "無"}`,
+    `被推薦次數: ${boardgame.recommendedCounts}`,
   ]
     .filter(Boolean) // 過濾掉 null 值（非幹部借用人）
     .join("\n");
