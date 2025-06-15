@@ -86,7 +86,7 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
     sleeves: row[11],
   };
   const note = row[12];
-  const recommendedCounts = parseInt(row[13]);
+  const recommendedCounts = parseInt(row[13]) || 0;
   return {
     id,
     name,

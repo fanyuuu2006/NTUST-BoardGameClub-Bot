@@ -321,7 +321,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname}你很棒👍有記得還:${matchBoardgame.id} ${matchBoardgame.name}\n請幫我把它放回"${matchBoardgame.position}"櫃，拜托囉~~😘`,
+          text: `${users[uuid].nickname}你很棒👍有記得還:${matchBoardgame.id} ${matchBoardgame.name.chinese}\n請幫我把它放回"${matchBoardgame.position}"櫃，拜托囉~~😘`,
         },
       ];
     } catch (err) {

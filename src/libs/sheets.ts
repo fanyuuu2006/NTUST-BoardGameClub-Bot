@@ -7,7 +7,7 @@ export const sheetsColumnRanges = {
     start: "A",
     end: "K",
   }
-};
+} as const;
 
 export const assetsPositions = ["A", "B", "C", "D"] as const;
 
