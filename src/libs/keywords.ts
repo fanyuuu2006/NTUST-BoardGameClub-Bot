@@ -325,7 +325,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   // 列出熱門桌遊(前十名)
   熱門桌遊: async (_, uuid: string) => {
     const row = await getAssetsSheetRows();
-    const boardgames = row.map(parseBoardGame);
+    const boardgames = row
+      .map(parseBoardGame)
+      .sort((a, b) => b.recommendedCounts - a.recommendedCounts);
     const top10Icon: string[] = [
       "1️⃣",
       "2️⃣",
