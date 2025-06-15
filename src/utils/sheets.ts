@@ -296,7 +296,9 @@ export const boardgameToString = (
     `中文名稱: ${boardgame.name.chinese}`,
     `種類: ${boardgame.type}`,
     `借用: ${boardgame.borrowed ? "已借出" : "未借出"}`,
-    users[uuid].isManager() ? `借用人: ${boardgame.borrower}` : null,
+    users[uuid].isManager() && boardgame.borrowed
+      ? `借用人: ${boardgame.borrower}`
+      : null,
     `位置: ${boardgame.position || "無紀錄"}`,
     `狀態(外膜): ${boardgame.status.shrinkWrap || "無紀錄"}`,
     `狀態(外觀): ${boardgame.status.appearance || "無紀錄"}`,
