@@ -1,4 +1,4 @@
-import { isDepartment, isGrade } from "../utils/sheets";
+import { findMember, isDepartment, isGrade } from "../utils/sheets";
 import {
   AssetsSheetField,
   BoardGame,
@@ -87,5 +87,10 @@ export class User {
 
   isManager(): boolean {
     return this.permission === "幹部" || this.permission === "先人";
+  }
+
+  async isMember(): Promise<boolean> {
+    const { user } = await findMember("uuid", this.uuid);
+    return !!user;
   }
 }

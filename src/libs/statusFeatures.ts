@@ -25,8 +25,9 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       text: `${users[uuid].nickname}\n我知道你很急 但你先別急\n✋慢慢來比較快~~`,
     },
   ],
-  normal: (messageText, uuid) => {
+  normal: async (messageText, uuid) => {
     users[uuid].status = "hold";
+    const isMember = await users[uuid].isMember();
     for (const {
       keyword,
       menberOnly,
@@ -34,7 +35,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       needAllow,
     } of keywordItems) {
       if (messageText.toLowerCase().includes(keyword)) {
-        if (menberOnly && !(uuid in users)) {
+        if (menberOnly && !isMember) {
           return [{ type: "text", text: "❌請先註冊，只有社員才能使用此功能" }];
         }
         if (permissionStrict && users[uuid].isManager()) {

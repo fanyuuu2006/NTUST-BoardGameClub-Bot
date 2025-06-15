@@ -231,17 +231,24 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     });
 
     return [
-      { type: "text", text: `${users[uuid].nickname} 你已經借了:` },
-      // 列出借用者已借用的桌遊 ( 每 3 個一批 輸出 )
-      ...Array.from({ length: Math.ceil(borrowedGames.length / 3) }).map(
-        (_, i) => ({
-          type: "text",
-          text: borrowedGames
-            .slice(i * 3, i * 3 + 3)
-            .map((game) => boardgameToString(game, uuid))
-            .join("\n\n"),
-        })
-      ),
+      ...(borrowedGames.length > 0
+        ? [
+            {
+              type: "text",
+              text: `${users[uuid].nickname} 你已經借了:`,
+            },
+            // 列出借用者已借用的桌遊 ( 每 3 個一批 輸出 )
+            ...Array.from({ length: Math.ceil(borrowedGames.length / 3) }).map(
+              (_, i) => ({
+                type: "text",
+                text: borrowedGames
+                  .slice(i * 3, i * 3 + 3)
+                  .map((game) => boardgameToString(game, uuid))
+                  .join("\n\n"),
+              })
+            ),
+          ]
+        : []),
       { type: "text", text: "告訴我桌遊編號我才能幫你借。😘" },
     ] as ReturnType<MessageHandler>;
   },
