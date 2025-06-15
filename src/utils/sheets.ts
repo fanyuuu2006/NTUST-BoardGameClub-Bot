@@ -59,10 +59,9 @@ export const getMemberSheetRows = async (): Promise<MemberSheetRow[]> => {
 export const getUserData = async (uuid: string) => {
   const rows = await getMemberSheetRows();
   const row = rows.find((row) => row[0] === uuid);
-  if (!row) {
-    return;
-  }
-  const user: User = new User(row);
+  const user: User = new User(
+    row ?? [uuid, "", "", "", "無", "無", "", "", "社員", "0", ""]
+  );
   if (users[uuid]) {
     users[uuid].status = user.status;
     users[uuid].variables = user.variables;
@@ -274,24 +273,6 @@ export const updateMemberSheetRow = async (
       err,
     };
   }
-};
-
-export const initUser = (uuid: string) => {
-  const user = new User([
-    uuid,
-    "",
-    "",
-    "",
-    "無",
-    "無",
-    "",
-    "",
-    "社員",
-    "0",
-    "",
-  ]);
-
-  users[user.uuid] = user;
 };
 
 export const boardgameToString = (

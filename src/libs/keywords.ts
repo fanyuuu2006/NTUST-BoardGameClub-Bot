@@ -7,7 +7,6 @@ import {
   boardgameToString,
   getAssetsSheetRows,
   getBoardGamesByCondition,
-  initUser,
   parseBoardGame,
   updateMemberSheetRow,
 } from "../utils/sheets";
@@ -162,7 +161,6 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       ];
     }
 
-    initUser(uuid);
     users[uuid].status = "awaiting_registerkey"; // 設定狀態為等待輸入序號
     return [
       // {
