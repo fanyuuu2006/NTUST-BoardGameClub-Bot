@@ -62,12 +62,8 @@ export const getUserData = async (uuid: string) => {
   const user: User = new User(
     row ?? [uuid, "", "", "", "無", "無", "", "", "社員", "0", ""]
   );
-  if (users[uuid]) {
-    user.status = users[uuid].status;
-    user.variables = users[uuid].variables;
-  }
 
-  users[uuid] = user;
+  users[uuid] = users[uuid] ?? user;
 };
 
 export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
