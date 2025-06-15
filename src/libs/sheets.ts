@@ -1,3 +1,14 @@
+export const sheetsColumnRanges = {
+  "assets":{
+    start: "A",
+    end: "N",
+  },
+  "member":{
+    start: "A",
+    end: "K",
+  }
+};
+
 export const assetsPositions = ["A", "B", "C", "D"] as const;
 
 export const permissions = ["先人", "幹部", "社員"] as const;
