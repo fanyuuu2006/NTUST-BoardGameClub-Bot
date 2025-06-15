@@ -5,23 +5,6 @@ import { users } from "../libs";
 import { statusFeatures } from "../libs/statusFeatures";
 import { getUserData } from "../utils/sheets";
 
-export const messageHandler: MessageHandler = async (
-  messageText: string,
-  uuid: string
-) => {
-  if (messageText === "重置") {
-    delete users[uuid];
-    return [{ type: "text", text: "🔄重置成功" }];
-  }
-
-  // Debug 用
-  if (messageText === "狀態") {
-    return [{ type: "text", text: users[uuid].status }];
-  }
-
-  return statusFeatures[users[uuid].status](messageText, uuid);
-};
-
 export const main = async (req: LineRequest, res: Response) => {
   const events = req.body.events;
   await Promise.all(events.map(_handleEvent)) // 迭代每一個事件 並傳遞給 _handleEvent 函數處理
@@ -50,7 +33,24 @@ const _handleEvent = async (
   
   await getUserData(uuid); // 取得用戶資料
 
-  const messages = await messageHandler(messageText, uuid);
+  const messages = await _messageHandler(messageText, uuid);
 
   return await lineClient.replyMessage(event.replyToken, messages);
+};
+
+export const _messageHandler: MessageHandler = async (
+  messageText: string,
+  uuid: string
+) => {
+  if (messageText === "重置") {
+    delete users[uuid];
+    return [{ type: "text", text: "🔄重置成功" }];
+  }
+
+  // Debug 用
+  if (messageText === "狀態") {
+    return [{ type: "text", text: users[uuid].status }];
+  }
+
+  return statusFeatures[users[uuid].status || "normal"](messageText, uuid);
 };
