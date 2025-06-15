@@ -587,7 +587,20 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         template: {
           type: "buttons",
           text: "請選擇年級",
-          actions: grades.map((g) => ({
+          actions: grades.slice(0, 4).map((g) => ({
+            label: g,
+            type: "message",
+            text: g,
+          })),
+        },
+      },
+      {
+        type: "template",
+        altText: "選擇年級",
+        template: {
+          type: "buttons",
+          text: "請選擇年級",
+          actions: grades.slice(4, 6).map((g) => ({
             label: g,
             type: "message",
             text: g,
