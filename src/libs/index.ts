@@ -8,4 +8,4 @@ export const setAllow = (allow: boolean) => {
 
 export const users: Record<User["uuid"], User> = {};
 
-export const schoolYear: number = 113;
+export const schoolYear: number = 114;
