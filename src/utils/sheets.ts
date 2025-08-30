@@ -87,7 +87,8 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
   };
   const note = row[12];
   const recommendedCounts = parseInt(row[13]) || 0;
-  return {
+
+  return new BoardGame(
     id,
     name,
     type,
@@ -95,16 +96,10 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
     inventory,
     status,
     note,
-    ...(borrowed
-      ? {
-          borrowed,
-          borrower: row[5],
-        }
-      : {
-          borrowed,
-        }),
-    recommendedCounts,
-  };
+    borrowed,
+    row[5] || undefined,
+    recommendedCounts
+  );
 };
 
 export const getBoardGamesByCondition = async ({

@@ -9,4 +9,5 @@ export const dialog = {
   冰箱是櫃子: "冰櫃是箱子",
   冰櫃是箱子: "冰箱是櫃子",
   范余好帥: "帥到不行\n他的IG：fan._.yuuu",
+  本安好帥: "帥到不行\n他的IG：ybean.an",
 };

@@ -223,6 +223,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       matchBoardgame.borrowed = true;
       matchBoardgame.borrower = users[uuid].name;
       users[uuid].status = "normal";
+      matchBoardgame.recommendedCountsIncrement();
       const { err } = await updateAssetsSheetRow(
         { field: "id", value: matchBoardgame.id },
         matchBoardgame
@@ -451,7 +452,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       }
 
       const matchBoardGame = matchBoardGames[0];
-      matchBoardGame.recommendedCounts += 1;
+      matchBoardGame.recommendedCountsIncrement();
       const { err } = await updateAssetsSheetRow(
         { field: "id", value: matchBoardGame.id },
         matchBoardGame
