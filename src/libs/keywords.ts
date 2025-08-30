@@ -160,7 +160,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         },
         {
           type: "text",
-          text: `喔還有如果你還沒加入社群這裡有連結喔😊\nLine：https://line.me/R/ti/g/TfjiECrWwG\nDiscord：https://discord.gg/XQDVMe5HBR`,
+          text: `喔還有如果你還沒加入社群這裡有連結喔😊\nLine：https://line.me/R/ti/g/dmSeyKc3fR\nDiscord：https://discord.gg/XQDVMe5HBR`,
         },
       ];
     }
