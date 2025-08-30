@@ -357,6 +357,15 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   },
 
   on: (_, uuid: string) => {
+    if (getAllow()) {
+      return [
+        {
+          type: "text",
+          text: `${users[uuid].nickname} 已經是開著的喔🤩`,
+        },
+      ];
+    }
+
     setAllow(true);
     users[uuid].status = "normal";
     return [
@@ -368,6 +377,15 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   },
 
   off: (_, uuid: string) => {
+    if (!getAllow()) {
+      return [
+        {
+          type: "text",
+          text: `${users[uuid].nickname} 已經是關閉的喔🤩`,
+        },
+      ];
+    }
+
     setAllow(false);
     users[uuid].status = "normal";
     return [
