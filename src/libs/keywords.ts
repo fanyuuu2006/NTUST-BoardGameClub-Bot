@@ -64,7 +64,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: true,
     description:
-      "要還桌遊了嗎？那就告訴我編號啦 🎮～記得要放回我指定的位置喔，等我跟同事都確認好了才能離開呢❗️雖然...雖然你這麼聽話我還是有點開心的😊",
+      "同上，我才懶得跟你廢話😮‍💨，就是跟我講編號，放回我指定的位置，我跟同事都說好再滾，懂嗎❓",
   },
   {
     keyword: "建議桌遊",
