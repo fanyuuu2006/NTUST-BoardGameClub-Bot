@@ -1,4 +1,4 @@
-import { getAllow, users } from "./index";
+import { community, getAllow, users } from "./index";
 import { MessageHandler } from "../types/line";
 import { User } from "../types/user";
 import { dialog } from "./dialog";
@@ -677,6 +677,12 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         {
           type: "text",
           text: "🎉註冊成功！",
+        },
+        {
+          type: "text",
+          text: `喔還有如果你還沒加入社群這裡有連結喔😊\n${community
+            .map((c) => `${c.label}：${c.url}`)
+            .join("\n")}`,
         },
       ];
     } catch (err) {

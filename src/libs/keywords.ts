@@ -1,4 +1,4 @@
-import { getAllow, setAllow, users } from ".";
+import { community, getAllow, setAllow, users } from ".";
 import { Keyword, KeywordItem } from "../types/custom";
 import { MessageHandler } from "../types/line";
 import { BoardGame } from "../types/sheets";
@@ -160,7 +160,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         },
         {
           type: "text",
-          text: `喔還有如果你還沒加入社群這裡有連結喔😊\nLine：https://line.me/R/ti/g/dmSeyKc3fR\nDiscord：https://discord.gg/XQDVMe5HBR`,
+          text: `喔還有如果你還沒加入社群這裡有連結喔😊\n${community
+            .map((c) => `${c.label}：${c.url}`)
+            .join("\n")}`,
         },
       ];
     }
@@ -303,24 +305,27 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     ];
   },
 
-  推薦: (_, uuid: string) => [
-    {
-      type: "text",
-      text: `${users[uuid].nickname} 是想推薦\n還是被推薦😎😎`,
-    },
-    {
-      type: "template",
-      altText: "recommend menu",
-      template: {
-        type: "buttons",
-        text: " ",
-        actions: [
-          { label: "熱門桌遊", type: "message", text: "熱門桌遊" },
-          { label: "我覺得好好玩", type: "message", text: "我覺得好好玩" },
-        ],
+  推薦: (_, uuid: string) => {
+    users[uuid].status = "normal";
+    return [
+      {
+        type: "text",
+        text: `${users[uuid].nickname} 是想推薦\n還是被推薦😎😎`,
       },
-    },
-  ],
+      {
+        type: "template",
+        altText: "recommend menu",
+        template: {
+          type: "buttons",
+          text: " ",
+          actions: [
+            { label: "熱門桌遊", type: "message", text: "熱門桌遊" },
+            { label: "我覺得好好玩", type: "message", text: "我覺得好好玩" },
+          ],
+        },
+      },
+    ];
+  },
 
   // 列出熱門桌遊(前十名)
   熱門桌遊: async (_, uuid: string) => {
