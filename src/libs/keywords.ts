@@ -31,7 +31,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "我不會幫社員以外的人處理借還桌遊的事，所以告訴我你的入社序號跟你的資料，我會勉為其難記住你的，應該啦😀",
+      "哼～我才不會幫社員以外的人處理借還桌遊的事勒😤！所以快告訴我你的入社序號跟資料，我就...就勉為其難記住你好了💭，應該吧",
   },
 
   {
@@ -40,7 +40,7 @@ export const keywordItems = [
     permissionStrict: true,
     needAllow: true,
     description:
-      "社課的時候給我乖乖簽到 ✍️。簽到次數越多，期末抽獎時中獎機率就越高 🎁。不過要是你懶得來，我也才不在乎呢 😏，少一次機會而已，關我屁事～",
+      "社課的時候記得要乖乖簽到喔 ✍️！簽到次數越多，期末抽獎時中獎機率就越高呢 🎁～雖然我才不在乎你來不來 😏，但是...但是少一次機會可別怪我沒提醒你！",
   },
   {
     keyword: "找桌遊",
@@ -48,7 +48,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "告訴我你想用哪種條件搜尋，不告訴我可是不會理你的😝，接著告訴我你想搜尋的關鍵字就行了👍",
+      "想找桌遊嗎？那就告訴我你想用哪種條件搜尋啦 🔍～不告訴我的話我可是會裝作沒聽到的喔😝！接著說出你想搜尋的關鍵字就行了👍",
   },
   {
     keyword: "借桌遊",
@@ -56,7 +56,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: true,
     description:
-      "告訴我你想借的桌遊編號，不知道編號在哪我才懶得跟你說他在盒子上😤，等我跟我同事說好才能拿走🫵",
+      "想借桌遊嗎？那就快告訴我桌遊編號吧 📦～編號就在盒子上面啦，不會看嗎😤？等我跟同事們都說好了你才能拿走喔 🫵",
   },
   {
     keyword: "還桌遊",
@@ -64,14 +64,14 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: true,
     description:
-      "同上，我才懶得跟你廢話😮‍💨，就是跟我講編號，放回我指定的位置，我跟同事都說好再滾，懂嗎❓",
+      "要還桌遊了嗎？那就告訴我編號啦 🎮～記得要放回我指定的位置喔，等我跟同事都確認好了才能離開呢❗️雖然...雖然你這麼聽話我還是有點開心的😊",
   },
   {
     keyword: "建議桌遊",
     menberOnly: true,
     permissionStrict: false,
     needAllow: false,
-    description: "你可以建議我們社團要買什麼桌遊，我會大發善心幫你轉達😎",
+    description: "你想推薦社團買什麼桌遊嗎？嗯...既然你這麼有誠意，我就大發慈悲幫你轉達吧 😎～不過會不會採用就不是我能決定的囉！",
   },
   {
     keyword: "我覺得好好玩",
@@ -79,7 +79,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "玩得開心就好啦，反正我也不是很在意你喜歡什麼🙄\n不過既然你都說了，我就勉為其難記下來吧～",
+      "玩得開心就好啦 🎉～雖然我表面上不在意你喜歡什麼 🙄，但是...但是既然你都特地跟我說了，我就勉為其難記下來吧 💭！說不定還能幫助其他人找到好玩的桌遊呢～",
   },
   {
     keyword: "推薦",
@@ -87,7 +87,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "我在無聊時會收集最近大家喜歡的桌遊資訊，但我才不會主動跟你講勒🤪\n然後如果你是社員，你也可以跟我分享你喜歡我們社團的哪個桌遊，雖然我不是很在意就是🥱",
+      "哼哼～我平常都有在偷偷收集大家喜歡的桌遊資訊呢 📊，雖然我才不會主動跟你講 🤪！如果你是社員的話，也可以跟我分享你喜歡我們社團的哪個桌遊～雖然...雖然我不是很在意就是了 🥱",
   },
   {
     keyword: "熱門桌遊",
@@ -95,7 +95,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "想知道最近大家都在玩什麼嗎？我就不情不願地告訴你吧😏\n畢竟我平常都有在觀察，只是懶得主動說而已～",
+      "想知道最近大家都在瘋什麼桌遊嗎 🤔？好吧好吧，看在你這麼好奇的份上，我就不情不願地告訴你吧 😏～畢竟我平常都有在暗中觀察，只是懶得主動說而已啦 👀",
   },
   {
     keyword: "on",
@@ -103,7 +103,7 @@ export const keywordItems = [
     permissionStrict: true,
     needAllow: false,
     description:
-      "這是開啟功能的指令啦～🙄",
+      "這是開啟功能的神奇指令喔 ✨～雖然看起來很簡單，但可是很重要的呢 🙄！",
   },
   {
     keyword: "off",
@@ -111,7 +111,7 @@ export const keywordItems = [
     permissionStrict: true,
     needAllow: false,
     description:
-      "這是關閉功能的指令。😮‍💨",
+      "這是關閉功能的指令呢 🔒～記得用完要關掉喔，不然我會不開心的 😮‍💨！",
   },
 ] as const;
 
@@ -122,7 +122,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `哼～看你這麼無知的份上，我就告訴你我能做什麼吧😤`,
+        text: `哼～看你這麼無知的份上，我就特別告訴你我能做什麼吧 😤✨`,
       },
       {
         type: "text",
@@ -146,7 +146,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       },
       {
         "type": "text",
-        "text": `作者:\n如果你覺得它壞掉或卡住的話輸入「重置」並從頭操作一遍。\n或是聯繫我們的幹部們~`,
+        "text": `👩‍💻 作者小提醒:\n如果你覺得我壞掉或卡住的話，記得輸入「重置」然後從頭操作一遍喔～\n或者可以聯繫我們親切的幹部們呢 💪！`,
       }
     ];
   },
@@ -155,14 +155,14 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     users[uuid].status = "normal";
     if (!getAllow()) {
       // 社課開始時 幹部開啟允許
-      return [{ type: "text", text: "社課還沒開始你簽到啥阿❓" }];
+      return [{ type: "text", text: "欸欸欸～社課還沒開始你簽到什麼啦 ❓🤨" }];
     }
     try {
       if (
         users[uuid].lastSignInTime &&
         isSameDay(users[uuid].lastSignInTime, new Date())
       ) {
-        return [{ type: "text", text: "你今天已經簽到過囉❗️" }];
+        return [{ type: "text", text: "你今天已經簽到過囉～不要重複簽到啦 ❗️😊" }];
       }
 
       users[uuid].signIn();
@@ -176,12 +176,12 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname || users[uuid].name}簽到成功🎉`,
+          text: `🎉 ${users[uuid].nickname || users[uuid].name} 簽到成功啦～`,
         },
       ];
     } catch (err) {
       console.error(err);
-      return [{ type: "text", text: `簽到失敗❌` }];
+      return [{ type: "text", text: `簽到失敗了... ❌ 可能是系統出了點小問題～` }];
     }
   },
 
@@ -193,15 +193,15 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname}你已經註冊過了，不要再來了喔🤗~`,
+          text: `${users[uuid].nickname}～你已經註冊過啦，不要再來煩我了喔 🤗💦`,
         },
         {
           type: "text",
-          text: `這是你之前的註冊資料\n姓名：${users[uuid].name}\n暱稱：${users[uuid].nickname}\n學號：${users[uuid].studentID}\n科系：${users[uuid].department}\n年級：${users[uuid].grade}\n電話📞：${users[uuid].phonenumber}`,
+          text: `這是你之前的註冊資料呢 📋～\n👤 姓名：${users[uuid].name}\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${users[uuid].studentID}\n🏫 科系：${users[uuid].department}\n📚 年級：${users[uuid].grade}\n📞 電話：${users[uuid].phonenumber}`,
         },
         {
           type: "text",
-          text: `喔還有如果你還沒加入社群這裡有連結喔😊\n${community
+          text: `對了對了～如果你還沒加入我們的社群，這裡有連結喔 🔗😊\n${community
             .map((c) => `${c.label}：${c.url}`)
             .join("\n")}`,
         },
@@ -220,7 +220,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       //   type: "text",
       //   text: `至以下表單進行手動註冊，填完後至信箱查看註冊結果\nhttps://docs.google.com/forms/d/e/1FAIpQLScHRQ2RzRO9iVFshhSbCi9LIupTw3bJbPfDgkWGi1SJrcLp3w/viewform?usp=sf_link`,
       // },
-      { type: "text", text: "請輸入序號進行註冊：" },
+      { type: "text", text: "請輸入你的入社序號來進行註冊喔 📝～" },
     ];
   },
 
@@ -243,10 +243,10 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "template",
-        altText: "請選擇搜尋的欄位",
+        altText: "請選擇搜尋的欄位～",
         template: {
           type: "buttons",
-          text: "搜尋條件",
+          text: "你想用什麼條件搜尋呢 🔍？",
           actions: [
             { label: "編號", type: "message", text: "編號" },
             { label: "英文名稱", type: "message", text: "英文名稱" },
@@ -272,7 +272,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         ? [
             {
               type: "text",
-              text: `${users[uuid].nickname} 你已經借了:`,
+              text: `${users[uuid].nickname}～你目前已經借了這些桌遊喔 📚：`,
             },
             // 列出借用者已借用的桌遊 ( 每 3 個一批 輸出 )
             ...Array.from({ length: Math.ceil(borrowedGames.length / 3) }).map(
