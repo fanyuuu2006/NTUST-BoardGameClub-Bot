@@ -45,7 +45,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         }
         if (needAllow && !getAllow() && !users[uuid].isManager()) {
           users[uuid].status = "normal";
-          return [{ type: "text", text: "❌我同事沒有許可可是不行的喔~" }];
+          return [
+            { type: "text", text: "❌我同事沒有許可可是不行的喔~" },
+            { type: "text", text: "請聯絡一下其他幹部呦~" },
+          ];
         }
         return kewordFeatures[keyword](messageText, uuid);
       }
