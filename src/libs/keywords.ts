@@ -1,5 +1,5 @@
 import { community, getAllow, setAllow, users } from ".";
-import { Keyword, KeywordItem } from "../types/custom";
+import { Keyword } from "../types/custom";
 import { MessageHandler } from "../types/line";
 import { BoardGame } from "../types/sheets";
 import { isSameDay } from "../utils/custom";
@@ -11,23 +11,7 @@ import {
   updateMemberSheetRow,
 } from "../utils/sheets";
 
-export const keywords = [
-  // "手動註冊",
-  "註冊",
-  "簽到",
-  "測試",
-  "找桌遊",
-  "借桌遊",
-  "還桌遊",
-  "建議桌遊",
-  "我覺得好好玩",
-  "推薦",
-  "熱門桌遊",
-  "on",
-  "off",
-] as const;
-
-export const keywordItems: KeywordItem[] = [
+export const keywordItems = [
   // {
   //   keyword: "手動註冊",
   //   menberOnly: false,
@@ -35,10 +19,19 @@ export const keywordItems: KeywordItem[] = [
   //   needAllow: false,
   // },
   {
+    keyword: "幫助",
+    menberOnly: false,
+    permissionStrict: false,
+    needAllow: false,
+    description: "正常不會跑出這段",
+  },
+  {
     keyword: "註冊",
     menberOnly: false,
     permissionStrict: false,
     needAllow: false,
+    description:
+      "我不會幫社員以外的人處理借還桌遊的事，所以告訴我你的入社序號跟你的資料，我會勉為其難記住你的，應該啦😀",
   },
 
   {
@@ -46,70 +39,118 @@ export const keywordItems: KeywordItem[] = [
     menberOnly: true,
     permissionStrict: true,
     needAllow: true,
-  },
-  {
-    keyword: "測試",
-    menberOnly: false,
-    permissionStrict: false,
-    needAllow: false,
+    description:
+      "社課的時候給我乖乖簽到 ✍️。簽到次數越多，期末抽獎時中獎機率就越高 🎁。不過要是你懶得來，我也才不在乎呢 😏，少一次機會而已，關我屁事～",
   },
   {
     keyword: "找桌遊",
     menberOnly: false,
     permissionStrict: false,
     needAllow: false,
+    description:
+      "告訴我你想用哪種條件搜尋，不告訴我可是不會理你的😝，接著告訴我你想搜尋的關鍵字就行了👍",
   },
   {
     keyword: "借桌遊",
     menberOnly: true,
     permissionStrict: false,
     needAllow: true,
+    description:
+      "告訴我你想借的桌遊編號，不知道編號在哪我才懶得跟你說他在盒子上😤，等我跟我同事說好才能拿走🫵",
   },
   {
     keyword: "還桌遊",
     menberOnly: true,
     permissionStrict: false,
     needAllow: true,
+    description:
+      "同上，我才懶得跟你廢話😮‍💨，就是跟我講編號，放回我指定的位置，我跟同事都說好再滾，懂嗎❓",
   },
   {
     keyword: "建議桌遊",
     menberOnly: true,
     permissionStrict: false,
     needAllow: false,
+    description: "你可以建議我們社團要買什麼桌遊，我會大發善心幫你轉達😎",
   },
   {
     keyword: "我覺得好好玩",
     menberOnly: true,
     permissionStrict: false,
     needAllow: false,
+    description:
+      "玩得開心就好啦，反正我也不是很在意你喜歡什麼🙄\n不過既然你都說了，我就勉為其難記下來吧～",
   },
   {
     keyword: "推薦",
     menberOnly: false,
     permissionStrict: false,
     needAllow: false,
+    description:
+      "我在無聊時會收集最近大家喜歡的桌遊資訊，但我才不會主動跟你講勒🤪\n然後如果你是社員，你也可以跟我分享你喜歡我們社團的哪個桌遊，雖然我不是很在意就是🥱",
   },
   {
     keyword: "熱門桌遊",
     menberOnly: false,
     permissionStrict: false,
     needAllow: false,
+    description:
+      "想知道最近大家都在玩什麼嗎？我就不情不願地告訴你吧😏\n畢竟我平常都有在觀察，只是懶得主動說而已～",
   },
   {
     keyword: "on",
     menberOnly: true,
     permissionStrict: true,
     needAllow: false,
+    description:
+      "這是開啟功能的指令啦～🙄 不過有些功能還是要我同事同意才行，別以為你輸入 on 我就會乖乖聽話😏",
   },
   {
     keyword: "off",
     menberOnly: true,
     permissionStrict: true,
     needAllow: false,
+    description:
+      "這是關閉功能的指令。😮‍💨 但我說了算嗎？才怪～ 有些功能還得經過我同事點頭才會真的關掉，別太天真啊😏",
   },
-];
+] as const;
 
 export const kewordFeatures: Record<Keyword, MessageHandler> = {
+  幫助: (_, uuid: string) => {
+    users[uuid].status = "normal";
+
+    return [
+      {
+        type: "text",
+        text: `哼～看你這麼無知的份上，我就告訴你我能做什麼吧😤`,
+      },
+      {
+        type: "text",
+        text: `${keywordItems
+          .filter(
+            (item) => {
+              // 排除幫助本身
+              if (item.keyword === "幫助") return false;
+              
+              // 如果需要會員權限但用戶不是會員，則過濾掉
+              if (item.menberOnly && !users[uuid].isMember()) return false;
+              
+              // 如果 permissionStrict == true，則需要 users[uuid].isManager() == true
+              if (item.permissionStrict && !users[uuid].isManager()) return false;
+              
+              return true;
+            }
+          )
+          .map((item) => `🟢${item.keyword}\n${item.description}`)
+          .join("\n\n")}`,
+      },
+      {
+        "type": "text",
+        "text": `作者:\n如果你覺得它壞掉或卡住的話輸入「重置」並從頭操作一遍。\n或是聯繫我們的幹部們~`,
+      }
+    ];
+  },
+
   簽到: async (_, uuid: string) => {
     users[uuid].status = "normal";
     if (!getAllow()) {
@@ -194,16 +235,6 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   //     },
   //   ];
   // },
-
-  測試: (_, uuid: string) => {
-    users[uuid].status = "normal";
-    return [
-      {
-        type: "text",
-        text: `${users[uuid].nickname} 測啥呢`,
-      },
-    ];
-  },
 
   找桌遊: (_, uuid: string) => {
     users[uuid].status = "awaiting_search"; // 設定狀態為等待搜尋桌遊

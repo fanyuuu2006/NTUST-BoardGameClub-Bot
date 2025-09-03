@@ -63,6 +63,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     users[uuid].status = "normal";
     return [
       { type: "text", text: `你今天想幹嘛呢❓\n快點喔~我可是個大忙人呢😎` },
+      { type: "text", text: `輸入「幫助」我就勉為其難告訴你能做些什麼😏` },
     ];
   },
 
@@ -325,7 +326,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname}你很棒👍有記得還:${matchBoardgame.id} ${matchBoardgame.name.chinese}\n請幫我把它放回"${matchBoardgame.position}"櫃，拜托囉~~😘`,
+          text: `${users[uuid].nickname}你很棒👍有記得還:${matchBoardgame.id} ${matchBoardgame.name.chinese}\n請幫我把它放回 ${matchBoardgame.position} 櫃，拜托囉~~😘`,
         },
       ];
     } catch (err) {
