@@ -103,7 +103,7 @@ export const keywordItems = [
     permissionStrict: true,
     needAllow: false,
     description:
-      "這是開啟功能的指令啦～🙄 不過有些功能還是要我同事同意才行，別以為你輸入 on 我就會乖乖聽話😏",
+      "這是開啟功能的指令啦～🙄",
   },
   {
     keyword: "off",
@@ -111,7 +111,7 @@ export const keywordItems = [
     permissionStrict: true,
     needAllow: false,
     description:
-      "這是關閉功能的指令。😮‍💨 但我說了算嗎？才怪～ 有些功能還得經過我同事點頭才會真的關掉，別太天真啊😏",
+      "這是關閉功能的指令。😮‍💨",
   },
 ] as const;
 
@@ -141,7 +141,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
               return true;
             }
           )
-          .map((item) => `🟢${item.keyword}\n${item.description}`)
+          .map((item) => `🔴${item.keyword}\n${item.description}`)
           .join("\n\n")}`,
       },
       {
