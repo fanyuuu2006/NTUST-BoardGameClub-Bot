@@ -139,7 +139,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
           })
           .map(
             (item) =>
-              `🔴 ${item.keyword}\n ${item.description}\n👉`
+              `🔴 ${item.keyword}\n ${item.description}`
           )
           .join("\n\n————————————\n"),
       },
