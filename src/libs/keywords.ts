@@ -71,7 +71,8 @@ export const keywordItems = [
     menberOnly: true,
     permissionStrict: false,
     needAllow: false,
-    description: "你想推薦社團買什麼桌遊嗎？嗯...既然你這麼有誠意，我就大發慈悲幫你轉達吧 😎～不過會不會採用就不是我能決定的囉！",
+    description:
+      "你想推薦社團買什麼桌遊嗎？嗯...既然你這麼有誠意，我就大發慈悲幫你轉達吧 😎～不過會不會採用就不是我能決定的囉！",
   },
   {
     keyword: "我覺得好好玩",
@@ -122,32 +123,30 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `哼～看你這麼無知的份上，我就特別告訴你我能做什麼吧 😤✨`,
+        text: `哼～看你這麼無知的份上，我就特別告訴你我能做什麼吧 😤✨\n————————————`,
       },
       {
         type: "text",
-        text: `${keywordItems
-          .filter(
-            (item) => {
-              // 排除幫助本身
-              if (item.keyword === "幫助") return false;
-              
-              // 如果需要會員權限但用戶不是會員，則過濾掉
-              if (item.menberOnly && !users[uuid].isMember()) return false;
-              
-              // 如果 permissionStrict == true，則需要 users[uuid].isManager() == true
-              if (item.permissionStrict && !users[uuid].isManager()) return false;
-              
-              return true;
-            }
+        text: keywordItems
+          .filter((item) => {
+            // 排除幫助本身
+            if (item.keyword === "幫助") return false;
+            // 如果需要會員權限但用戶不是會員，則過濾掉
+            if (item.menberOnly && !users[uuid].isMember()) return false;
+            // 如果 permissionStrict == true，則需要 users[uuid].isManager() == true
+            if (item.permissionStrict && !users[uuid].isManager()) return false;
+            return true;
+          })
+          .map(
+            (item) =>
+              `🔑 ${item.keyword}\n📖 ${item.description}\n👉 輸入「${item.keyword}」試試看`
           )
-          .map((item) => `🔴${item.keyword}\n${item.description}`)
-          .join("\n\n")}`,
+          .join("\n\n————————————\n"),
       },
       {
-        "type": "text",
-        "text": `👩‍💻 作者小提醒:\n如果你覺得我壞掉或卡住的話，記得輸入「重置」然後從頭操作一遍喔～\n或者可以聯繫我們親切的幹部們呢 💪！`,
-      }
+        type: "text",
+        text: `👩‍💻 作者小提醒:\n如果你覺得我壞掉或卡住的話，記得輸入「重置」然後從頭操作一遍喔～\n或者可以聯繫我們親切的幹部們呢 💪！`,
+      },
     ];
   },
 
@@ -162,7 +161,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         users[uuid].lastSignInTime &&
         isSameDay(users[uuid].lastSignInTime, new Date())
       ) {
-        return [{ type: "text", text: "你今天已經簽到過囉～不要重複簽到啦 ❗️😊" }];
+        return [
+          { type: "text", text: "你今天已經簽到過囉～不要重複簽到啦 ❗️😊" },
+        ];
       }
 
       users[uuid].signIn();
@@ -181,7 +182,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       ];
     } catch (err) {
       console.error(err);
-      return [{ type: "text", text: `簽到失敗了... ❌ 可能是系統出了點小問題～` }];
+      return [
+        { type: "text", text: `簽到失敗了... ❌ 可能是系統出了點小問題～` },
+      ];
     }
   },
 
@@ -364,10 +367,11 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     const boardgames = row
       .map(parseBoardGame)
       .sort((a, b) => b.recommendedCounts - a.recommendedCounts);
+
     const top10Icon: string[] = [
-      "1️⃣",
-      "2️⃣",
-      "3️⃣",
+      "🥇",
+      "🥈",
+      "🥉",
       "4️⃣",
       "5️⃣",
       "6️⃣",
@@ -376,19 +380,29 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       "9️⃣",
       "🔟",
     ];
-    const top10: string[] = boardgames.map(
-      (game: BoardGame, i: number) =>
-        `${i < 3 ? "🔥" : ""}${top10Icon[i]}\n 編號: ${game.id}\n 英文名稱: ${
-          game.name.english
-        }\n 中文名稱: ${game.name.chinese}\n 種類: ${game.type}\n`
-    );
+
+    const top10: string[] = boardgames.map((game: BoardGame, i: number) => {
+      const highlight = i < 3 ? "🔥" : "";
+      return `${highlight}${top10Icon[i]}  【${game.name.chinese}】 / ${game.name.english}
+🎲 類型：${game.type}
+🆔 編號：${game.id}
+⭐ 被推薦次數：${game.recommendedCounts}`;
+    });
+
     users[uuid].status = "normal";
     return [
       {
         type: "text",
-        text: `✨熱門桌遊✨\n\n${top10.slice(0, 5).join("\n\n")}`,
+        text: `✨ 熱門桌遊排行榜✨（依被推薦次數排序）\n————————————\n${top10
+          .slice(0, 5)
+          .join("\n\n")}`,
       },
-      { type: "text", text: `${top10.slice(5, 10).join("\n\n")}` },
+      {
+        type: "text",
+        text: `${top10
+          .slice(5, 10)
+          .join("\n\n")}\n————————————\n🎉 快來看看你玩過幾款吧！`,
+      },
     ];
   },
 
