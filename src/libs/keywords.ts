@@ -139,7 +139,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
           })
           .map(
             (item) =>
-              `🔴 ${item.keyword}\n ${item.description}\n👉 輸入「${item.keyword}」試試看`
+              `🔴 ${item.keyword}\n ${item.description}\n👉`
           )
           .join("\n\n————————————\n"),
       },
