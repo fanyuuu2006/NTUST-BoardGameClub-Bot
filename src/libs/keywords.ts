@@ -407,6 +407,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   },
 
   on: (_, uuid: string) => {
+    users[uuid].status = "normal";
     if (getAllow()) {
       return [
         {
@@ -417,7 +418,6 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     }
 
     setAllow(true);
-    users[uuid].status = "normal";
     return [
       {
         type: "text",
@@ -427,6 +427,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
   },
 
   off: (_, uuid: string) => {
+    users[uuid].status = "normal";
     if (!getAllow()) {
       return [
         {
@@ -437,7 +438,6 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     }
 
     setAllow(false);
-    users[uuid].status = "normal";
     return [
       { type: "text", text: `${users[uuid].nickname}有記得關~算你識相🤩` },
     ];
