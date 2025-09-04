@@ -139,7 +139,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
           })
           .map(
             (item) =>
-              `🔑 ${item.keyword}\n📖 ${item.description}\n👉 輸入「${item.keyword}」試試看`
+              `🔴 ${item.keyword}\n ${item.description}\n👉 輸入「${item.keyword}」試試看`
           )
           .join("\n\n————————————\n"),
       },
@@ -383,7 +383,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
 
     const top10: string[] = boardgames.map((game: BoardGame, i: number) => {
       const highlight = i < 3 ? "🔥" : "";
-      return `${highlight}${top10Icon[i]}  【${game.name.chinese}】 / ${game.name.english}
+      return `${highlight}${top10Icon[i]}  【${game.name.chinese}】/【${game.name.english}】
 🎲 類型：${game.type}
 🆔 編號：${game.id}
 ⭐ 被推薦次數：${game.recommendedCounts}`;
