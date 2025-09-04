@@ -62,8 +62,8 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     }
     users[uuid].status = "normal";
     return [
-      { type: "text", text: `你今天想幹嘛呢❓\n快點喔~我可是個大忙人呢😎` },
-      { type: "text", text: `輸入「幫助」我就勉為其難告訴你能做些什麼😏` },
+      { type: "text", text: `你今天想幹嘛呢❓\n快點喔~我可是個大忙人呢~` },
+      { type: "text", text: `輸入「幫助」我就勉為其難告訴你能做些什麼😎` },
     ];
   },
 
