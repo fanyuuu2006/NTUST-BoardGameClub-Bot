@@ -46,7 +46,7 @@ export const departments = [
   "應用外語系",
   "不分系學士班",
   "電資學士班",
-  
+  "建築系",
   "其他",
 ] as const;
 
