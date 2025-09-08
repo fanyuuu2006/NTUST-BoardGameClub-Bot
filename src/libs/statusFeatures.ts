@@ -551,15 +551,15 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     users[uuid].status = "awaiting_department";
     return departments
       .reduce<string[][]>((res, dept, i) => {
-        /* 每 3 個 一個區塊
+        /* 每 4 個 一個區塊
           i 
           0 [[d1]]
           1 [[d1, d2]]
           2 [[d1, d2, d3]]
-          3 [[d1, d2, d3], [d4]]
-          4 [[d1, d2, d3], [d4, d5]]
+          3 [[d1, d2, d3, d4], ]
+          4 [[d1, d2, d3, d4], [d5]]
            */
-        if (i % 3 === 0) {
+        if (i % 4 === 0) {
           res.push([]);
         }
         res[res.length - 1].push(dept);
