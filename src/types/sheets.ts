@@ -136,6 +136,21 @@ export class BoardGame {
   recommendedCountsIncrement() {
     this.#recommendedCounts++;
   }
+
+  toJSON() {
+    return {
+      id: this.#id,
+      name: this.#name,
+      type: this.#type,
+      position: this.position,
+      inventory: this.#inventory,
+      status: this.#status,
+      note: this.#note,
+      borrowed: this.borrowed,
+      borrower: this.borrower,
+      recommendedCounts: this.#recommendedCounts,
+    };
+  }
 }
 
 // A ~ J
