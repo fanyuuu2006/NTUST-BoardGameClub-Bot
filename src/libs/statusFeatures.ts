@@ -559,7 +559,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
           3 [[d1, d2, d3, d4], ]
           4 [[d1, d2, d3, d4], [d5]]
            */
-        if (i % 4 === 0) {
+        if (i % Math.floor(departments.length / 5) === 0) {
           res.push([]);
         }
         res[res.length - 1].push(dept);
@@ -681,6 +681,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         {
           type: "text",
           text: "🎉註冊成功！",
+        },
+        {
+          type: "text",
+          text: `這是你的註冊資料呢 📋～\n👤 姓名：${users[uuid].name}\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${users[uuid].studentID}\n🏫 科系：${users[uuid].department}\n📚 年級：${users[uuid].grade}\n📞 電話：${users[uuid].phonenumber}`,
         },
         {
           type: "text",
