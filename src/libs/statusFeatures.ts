@@ -551,7 +551,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     users[uuid].status = "awaiting_department";
     return departments
       .reduce<string[][]>((res, dept, i) => {
-        /* 每 4 個 一個區塊
+        /* 每 n 個 一個區塊
           i 
           0 [[d1]]
           1 [[d1, d2]]
@@ -559,7 +559,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
           3 [[d1, d2, d3, d4], ]
           4 [[d1, d2, d3, d4], [d5]]
            */
-        if (i % Math.floor(departments.length / 5) === 0) {
+
+        const n: number = Math.ceil(departments.length / 5);
+
+        if (i % n === 0) {
           res.push([]);
         }
         res[res.length - 1].push(dept);
