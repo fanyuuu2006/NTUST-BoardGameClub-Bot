@@ -216,6 +216,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
 
     users[uuid].status = "awaiting_registerkey"; // 設定狀態為等待輸入序號
     return [
+      { type: "text", text: "請輸入你的入社序號來進行註冊喔 📝～" },
       {
         type: "text",
         text: `作者：如果小傲驕它傲驕不理你，請使用以下方法註冊🔽`,
@@ -226,7 +227,6 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         type: "text",
         text: `至以下表單進行手動註冊，填完後至信箱查看註冊結果\nhttps://docs.google.com/forms/d/e/1FAIpQLScHRQ2RzRO9iVFshhSbCi9LIupTw3bJbPfDgkWGi1SJrcLp3w/viewform?usp=sf_link`,
       },
-      { type: "text", text: "請輸入你的入社序號來進行註冊喔 📝～" },
     ];
   },
 

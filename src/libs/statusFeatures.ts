@@ -686,7 +686,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         },
         {
           type: "text",
-          text: `這是你的註冊資料呢 📋～\n👤 姓名：${users[uuid].name}\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${users[uuid].studentID}\n🏫 科系：${users[uuid].department}\n📚 年級：${users[uuid].grade}\n📞 電話：${users[uuid].phonenumber}`,
+          text: `這是你的註冊資料呢 📋～\n👤 姓名：${users[uuid].name}\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${users[uuid].studentID}\n🏫 科系：${users[uuid].department}\n📚 年級：${users[uuid].grade}\n📞 電話：${users[uuid].phonenumber}\n📜 身份：${users[uuid].permission}`,
         },
         {
           type: "text",
