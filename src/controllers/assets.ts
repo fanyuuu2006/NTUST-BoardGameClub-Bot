@@ -32,7 +32,7 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
     value,
     strict: String(strict).toLowerCase() === "true", // 更健壯的轉換
   });
-  
+
   if (matchBoardGames.length === 0) {
     res
       .status(404)
@@ -61,8 +61,6 @@ export const getAssetById = async (req: Request, res: Response) => {
 
   res.status(200).json({ total: 1, data: [boardGame] });
 };
-
-//express.json() 會解析 req.body，而這樣會影響 LINE SDK 驗證。
 
 // export const patchAssetById = async (req: Request, res: Response) => {
 //   const id = parseInt(req.params.id);
