@@ -4,7 +4,6 @@ import { MessageHandler } from "../types/line";
 import { BoardGame } from "../types/sheets";
 import { isSameDay } from "../utils/custom";
 import {
-  boardgameToString,
   getAssetsSheetRows,
   getBoardGamesByCondition,
   parseBoardGame,
@@ -137,10 +136,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
             if (item.permissionStrict && !users[uuid].isManager()) return false;
             return true;
           })
-          .map(
-            (item) =>
-              `🔴 ${item.keyword}\n ${item.description}`
-          )
+          .map((item) => `🔴 ${item.keyword}\n ${item.description}`)
           .join("\n\n————————————\n"),
       },
       {
@@ -283,7 +279,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
                 type: "text",
                 text: borrowedGames
                   .slice(i * 3, i * 3 + 3)
-                  .map((game) => boardgameToString(game, uuid))
+                  .map((game) => game.toDisplayText(uuid))
                   .join("\n\n"),
               })
             ),
@@ -309,7 +305,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
           type: "text",
           text: borrowedGames
             .slice(i * 3, i * 3 + 3)
-            .map((game) => boardgameToString(game, uuid))
+            .map((game) => game.toDisplayText(uuid))
             .join("\n\n"),
         })
       ),

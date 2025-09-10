@@ -281,27 +281,3 @@ export const updateMemberSheetRow = async <T extends keyof User>(
   }
 };
 
-export const boardgameToString = (
-  boardgame: BoardGame,
-  uuid: string
-): string => {
-  return [
-    `編號: ${boardgame.id}`,
-    `英文名稱: ${boardgame.name.english}`,
-    `中文名稱: ${boardgame.name.chinese}`,
-    `種類: ${boardgame.type}`,
-    `借用: ${boardgame.borrowed ? "已借出" : "未借出"}`,
-    users[uuid].isManager() && boardgame.borrowed
-      ? `借用人: ${boardgame.borrower}`
-      : null,
-    `位置: ${boardgame.position || "無紀錄"}`,
-    `狀態(外膜): ${boardgame.status.shrinkWrap || "無紀錄"}`,
-    `狀態(外觀): ${boardgame.status.appearance || "無紀錄"}`,
-    `狀態(缺件): ${boardgame.status.missingParts || "無紀錄"}`,
-    `狀態(牌套): ${boardgame.status.sleeves || "無紀錄"}`,
-    `備註: ${boardgame.note || "無"}`,
-    `被推薦次數: ${boardgame.recommendedCounts}`,
-  ]
-    .filter(Boolean) // 過濾掉 null 值（非幹部借用人）
-    .join("\n");
-};

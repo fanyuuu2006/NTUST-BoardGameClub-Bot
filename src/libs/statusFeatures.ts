@@ -5,7 +5,6 @@ import { dialog } from "./dialog";
 import { kewordFeatures, keywordItems } from "./keywords";
 import { AssetsSheetField } from "../types/sheets";
 import {
-  boardgameToString,
   findMember,
   getBoardGamesByCondition,
   isDepartment,
@@ -151,7 +150,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
                     ? "沒資料不要再翻了啦😣"
                     : `${boardgames
                         .slice(start, end)
-                        .map((game) => boardgameToString(game, uuid))
+                        .map((game) => game.toDisplayText(uuid))
                         .join("\n\n")}`
                 }`,
                 wrap: true,
@@ -410,14 +409,14 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
                     type: "text",
                     text: similarBoardGames
                       .slice(i * 3, i * 3 + 3)
-                      .map((game) => boardgameToString(game, uuid))
+                      .map((game) => game.toDisplayText(uuid))
                       .join("\n\n"),
                   })),
               ]
             : [
                 {
                   type: "text",
-                  text: boardgameToString(matchBoardGame, uuid),
+                  text: matchBoardGame.toDisplayText(uuid),
                 },
                 { type: "text", text: "你過時了😜 這我們早就有了🤣" },
               ]

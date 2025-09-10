@@ -3,7 +3,9 @@ export const isObject = (value: unknown): value is object =>
 
 export const isEqual = <T>(value1: T, value2: T): boolean => {
   if (value1 === value2) return true;
+
   if (typeof value1 !== typeof value2) return false;
+  
   if (Array.isArray(value1) !== Array.isArray(value2)) return false;
 
   if (Array.isArray(value1) && Array.isArray(value2)) {

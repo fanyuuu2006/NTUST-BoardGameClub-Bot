@@ -1,3 +1,4 @@
+import { users } from "../libs";
 import {
   assetsSheetFields,
   assetsPositions,
@@ -150,6 +151,28 @@ export class BoardGame {
       borrower: this.borrower,
       recommendedCounts: this.#recommendedCounts,
     };
+  }
+
+  toDisplayText(uuid: string): string {
+    return [
+      `編號: ${this.#id}`,
+      `英文名稱: ${this.#name.english}`,
+      `中文名稱: ${this.#name.chinese}`,
+      `種類: ${this.#type}`,
+      `借用: ${this.borrowed ? "已借出" : "未借出"}`,
+      users[uuid].isManager() && this.borrowed
+        ? `借用人: ${this.borrower}`
+        : null,
+      `位置: ${this.position || "無紀錄"}`,
+      `狀態(外膜): ${this.status.shrinkWrap || "無紀錄"}`,
+      `狀態(外觀): ${this.status.appearance || "無紀錄"}`,
+      `狀態(缺件): ${this.status.missingParts || "無紀錄"}`,
+      `狀態(牌套): ${this.status.sleeves || "無紀錄"}`,
+      `備註: ${this.note || "無"}`,
+      `被推薦次數: ${this.recommendedCounts}`,
+    ]
+      .filter(Boolean) // 過濾掉 null 值（非幹部借用人）
+      .join("\n");
   }
 }
 
