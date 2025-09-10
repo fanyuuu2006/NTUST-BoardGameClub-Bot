@@ -671,6 +671,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         ];
       }
       // 將註冊資料上傳
+      users[uuid].permission = "社員";
       const { err } = await updateMemberSheetRow(
         { field: "registerkey", value: users[uuid].registerkey },
         uuid
@@ -679,7 +680,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         throw err;
       }
       users[uuid].status = "normal";
-      users[uuid].permission= "社員";
       return [
         {
           type: "text",
