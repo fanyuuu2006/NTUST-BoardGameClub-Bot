@@ -95,7 +95,7 @@ export const getUserData = async (uuid: string) => {
   const rows = await getMemberSheetRows();
   const row = rows.find((row) => row[0] === uuid);
   const user: User = new User(
-    row ?? [uuid, "", "", "", undefined, undefined, "", "", "社員", "0", ""]
+    row ?? [uuid, "", "", "", undefined, undefined, "", "", undefined, "0", ""]
   );
 
   users[uuid] = users[uuid] ?? user;

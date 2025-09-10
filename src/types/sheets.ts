@@ -162,7 +162,7 @@ export type MemberSheetRow = [
   Grade | undefined,
   string,
   string,
-  Permission,
+  Permission | undefined,
   `${number}`,
   string
 ];

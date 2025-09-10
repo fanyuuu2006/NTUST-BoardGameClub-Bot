@@ -1,4 +1,3 @@
-import { findMember } from "../utils/sheets";
 import {
   AssetsSheetField,
   BoardGame,
@@ -40,7 +39,7 @@ export class User {
   #signInCount: number = 0; // 簽到次數
   // 最近簽到時間
   #lastSignInTime?: Date;
-  permission: Permission = "社員"; // 權限(角色)
+  permission?: Permission; // 權限(角色)
   status: Status = "normal";
 
   variables: {
@@ -59,8 +58,8 @@ export class User {
     this.name = row[1];
     this.nickname = row[2];
     this.studentID = row[3];
-    this.department = row[4] || undefined;
-    this.grade = row[5] || undefined;
+    this.department = row[4];
+    this.grade = row[5];
     this.phonenumber = row[6];
     this.registerkey = row[7];
     this.permission = row[8];
@@ -90,7 +89,6 @@ export class User {
   }
 
   async isMember(): Promise<boolean> {
-    const { user } = await findMember("uuid", this.uuid);
-    return !!user;
+    return !!this.permission;
   }
 }
