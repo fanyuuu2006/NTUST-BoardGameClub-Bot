@@ -1,4 +1,4 @@
-import { isEqual } from "./custom";
+import { isEqual, normalize } from "./custom";
 import { sheets } from "../configs/googleapis";
 import { schoolYear, users } from "../libs/index";
 import {
@@ -105,17 +105,23 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
 export const getBoardGamesByCondition = async ({
   field,
   value,
+  strict = false,
 }: {
   field: AssetsSheetField;
   value: string;
+  strict?: boolean;
 }): Promise<BoardGame[]> => {
   const rows = await getAssetsSheetRows();
+  const index = assetsSheetFields.indexOf(field.trim() as AssetsSheetField);
+  if (index === -1) return []; // 避免 field 不存在
+
+  const normalizedValue = normalize(value);
+
   const matchRows = rows.filter((row) => {
-    const index = assetsSheetFields.indexOf(field.trim() as AssetsSheetField);
-    return (
-      row[index] &&
-      row[index].toLowerCase().includes(value.trim().toLowerCase())
-    );
+    const cellValue = normalize(row[index]);
+    return strict
+      ? cellValue === normalizedValue
+      : cellValue.includes(normalizedValue);
   });
   return matchRows.map(parseBoardGame).sort((a, b) => a.id - b.id);
 };
@@ -280,4 +286,3 @@ export const updateMemberSheetRow = async <T extends keyof User>(
     };
   }
 };
-
