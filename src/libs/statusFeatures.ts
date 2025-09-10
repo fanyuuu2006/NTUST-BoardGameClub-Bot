@@ -679,6 +679,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         throw err;
       }
       users[uuid].status = "normal";
+      users[uuid].permission= "社員";
       return [
         {
           type: "text",
