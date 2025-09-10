@@ -6,19 +6,19 @@ import { AssetsSheetField } from "../types/sheets";
 export const getAssets = async (_: Request, res: Response) => {
   const rows = await getAssetsSheetRows();
   const boardgames = rows.map((row) => parseBoardGame(row));
-  res.status(200).json({ data: boardgames });
+  res.status(200).json({ total: boardgames.length, data: boardgames });
 };
 
 export const getAssetsSearch = async (req: Request, res: Response) => {
   const { field, value } = req.query;
 
   if (typeof field !== "string" || typeof value !== "string") {
-    res.status(400).json({ error: "無效的查詢參數", data: [] });
+    res.status(400).json({ error: "無效的查詢參數", total: 0, data: [] });
     return;
   }
 
   if (!assetsSheetFields.includes(field as AssetsSheetField)) {
-    res.status(400).json({ error: `無效的欄位: ${field}`, data: [] });
+    res.status(400).json({ error: `無效的欄位: ${field}`, total: 0, data: [] });
     return;
   }
 
@@ -28,27 +28,27 @@ export const getAssetsSearch = async (req: Request, res: Response) => {
   });
 
   if (matchBoardGames.length === 0) {
-    res.status(404).json({ error: `找不到符合查詢條件的社產`, data: [] });
+    res.status(404).json({ error: `找不到符合查詢條件的社產`, total: 0, data: [] });
   }
 
-  res.status(200).json({ data: matchBoardGames });
+  res.status(200).json({ total: matchBoardGames.length, data: matchBoardGames });
 };
 
 export const getAssetById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   if (isNaN(id)) {
-    res.status(400).json({ error: `無效的 ID: ${id}`, data: [] });
+    res.status(400).json({ error: `無效的 ID: ${id}`, total: 0, data: [] });
     return;
   }
 
   const { boardGame } = await findBoardGame("id", id);
 
   if (!boardGame) {
-    res.status(404).json({ error: "找不到對應的社產", data: [] });
+    res.status(404).json({ error: "找不到對應的社產", total: 0, data: [] });
     return;
   }
 
-  res.status(200).json({ data: [boardGame] });
+  res.status(200).json({ total: 1, data: [boardGame] });
 };
 
 //express.json() 會解析 req.body，而這樣會影響 LINE SDK 驗證。
