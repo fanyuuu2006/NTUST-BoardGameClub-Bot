@@ -162,10 +162,13 @@ export const getBoardGamesByCondition = async ({
   const normalizedValue = normalize(value);
 
   const matchRows = rows.filter((row) => {
-    const cellValue = normalize(row[index]);
-    return strict
-      ? cellValue === normalizedValue
-      : cellValue.includes(normalizedValue);
+    const cellValue = row[index];
+    return (
+      cellValue &&
+      (strict
+        ? cellValue === normalizedValue
+        : cellValue.includes(normalizedValue))
+    );
   });
   return matchRows.map(parseBoardGame).sort((a, b) => a.id - b.id);
 };
