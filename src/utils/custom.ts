@@ -75,9 +75,4 @@ export const isSameDay = (d1: Date, d2: Date): boolean => {
  * @param str 要標準化的字串
  * @returns 標準化後的字串
  */
-export const normalize = (str: string): string => {
-  if (typeof str !== "string") {
-    throw new Error("Parameter must be a string");
-  }
-  return str.trim().toLowerCase();
-};
+export const normalize = (str: string): string => str.trim().toLowerCase();
