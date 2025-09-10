@@ -7,7 +7,6 @@ import {
   memberSheetFields,
   grades,
 } from "../libs/sheets";
-import { Nullable } from "./custom";
 
 export type Permission = (typeof permissions)[number];
 
@@ -159,8 +158,8 @@ export type MemberSheetRow = [
   string,
   string,
   string,
-  Department | Nullable,
-  Grade | Nullable,
+  Department | undefined,
+  Grade | undefined,
   string,
   string,
   Permission,

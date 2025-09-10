@@ -95,7 +95,7 @@ export const getUserData = async (uuid: string) => {
   const rows = await getMemberSheetRows();
   const row = rows.find((row) => row[0] === uuid);
   const user: User = new User(
-    row ?? [uuid, "", "", "", "無", "無", "", "", "社員", "0", ""]
+    row ?? [uuid, "", "", "", undefined, undefined, "", "", "社員", "0", ""]
   );
 
   users[uuid] = users[uuid] ?? user;
@@ -315,8 +315,8 @@ export const updateMemberSheetRow = async <T extends keyof User>(
     users[uuid].name,
     users[uuid].nickname,
     users[uuid].studentID,
-    users[uuid].department || "無",
-    users[uuid].grade || "無",
+    users[uuid].department,
+    users[uuid].grade,
     users[uuid].phonenumber,
     users[uuid].registerkey,
     users[uuid].permission,

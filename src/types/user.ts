@@ -1,4 +1,4 @@
-import { findMember, isDepartment, isGrade } from "../utils/sheets";
+import { findMember } from "../utils/sheets";
 import {
   AssetsSheetField,
   BoardGame,
@@ -59,8 +59,8 @@ export class User {
     this.name = row[1];
     this.nickname = row[2];
     this.studentID = row[3];
-    this.department = isDepartment(row[4]) ? row[4] : undefined;
-    this.grade = isGrade(row[5]) ? row[5] : undefined;
+    this.department = row[4] || undefined;
+    this.grade = row[5] || undefined;
     this.phonenumber = row[6];
     this.registerkey = row[7];
     this.permission = row[8];

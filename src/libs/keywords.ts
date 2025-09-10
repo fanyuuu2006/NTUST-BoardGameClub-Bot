@@ -196,7 +196,13 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         },
         {
           type: "text",
-          text: `這是你之前的註冊資料呢 📋～\n👤 姓名：${users[uuid].name}\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${users[uuid].studentID}\n🏫 科系：${users[uuid].department}\n📚 年級：${users[uuid].grade}\n📞 電話：${users[uuid].phonenumber}`,
+          text: `這是你之前的註冊資料呢 📋～\n👤 姓名：${
+            users[uuid].name
+          }\n🏷️ 暱稱：${users[uuid].nickname}\n🎓 學號：${
+            users[uuid].studentID
+          }\n🏫 科系：${users[uuid].department || "無"}\n📚 年級：${
+            users[uuid].grade || "無"
+          }\n📞 電話：${users[uuid].phonenumber}`,
         },
         {
           type: "text",
