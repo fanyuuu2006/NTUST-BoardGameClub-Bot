@@ -254,6 +254,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       const matchBoardgames = await getBoardGamesByCondition({
         field: "編號",
         value: messageText,
+        strict: true,
       });
 
       if (matchBoardgames.length === 0) {
@@ -266,7 +267,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         ];
       }
 
-      let matchBoardgame = matchBoardgames[0];
+      const matchBoardgame = matchBoardgames[0];
 
       if (matchBoardgame.borrower !== users[uuid].name) {
         users[uuid].status = "normal";
@@ -303,10 +304,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         ];
       }
 
-      if (users[uuid].variables.game) {
-        matchBoardgame = users[uuid].variables.game;
-      }
-
       matchBoardgame.borrowed = false;
       matchBoardgame.borrower = undefined;
 
@@ -335,33 +332,45 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     }
   },
 
-  awaiting_position: (messageText, uuid) => {
+  awaiting_position: async (messageText, uuid) => {
     users[uuid].status = "hold";
     if (!isPosition(messageText)) {
       users[uuid].status = "awaiting_position";
       return [
         {
           type: "text",
-          text: "我再給你一次機會\n不要欺騙我的感情🥲🥲🥲",
+          text: "❌這裡不收自訂義櫃子，\n再給你一次重新選擇的機會：",
         },
       ];
     }
-
-    if (users[uuid].variables.game) {
+    try {
+      if (!users[uuid].variables.game) {
+        throw new Error("!users[uuid].variables.game");
+      }
       users[uuid].variables.game.position = messageText;
+
+      const { err } = await updateAssetsSheetRow(
+        { field: "id", value: users[uuid].variables.game.id },
+        users[uuid].variables.game
+      );
+      if (err) {
+        throw err;
+      }
+
       users[uuid].status = "awaiting_returnid";
       return [
         {
           type: "text",
-          text: "Ok~~~\n收到你放的櫃子位置了！\n繼續進行換遊戲的流程吧😎😎😎",
+          text: "Ok~~~\n收到你放的櫃子位置了！\n繼續進行還遊戲的流程吧😎😎😎",
         },
         {
           type: "text",
           text: "再次告訴我桌遊編號：",
         },
       ];
-    } else {
+    } catch (err) {
       users[uuid].status = "normal";
+      console.error(err);
       return [
         {
           type: "text",
