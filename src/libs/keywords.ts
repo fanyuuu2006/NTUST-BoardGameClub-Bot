@@ -267,8 +267,8 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       value: users[uuid].name,
     });
 
-    return [
-      ...(borrowedGames.length > 0
+    const response =
+      borrowedGames.length > 0
         ? [
             {
               type: "text",
@@ -285,9 +285,22 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
               })
             ),
           ]
-        : []),
-      { type: "text", text: "告訴我桌遊編號我才能幫你借。😘" },
-    ] as ReturnType<MessageHandler>;
+        : [];
+
+    if (borrowedGames.length >= 3) {
+      users[uuid].status = "normal";
+      response.push({
+        type: "text",
+        text: "你已經借滿三款桌遊了喔～先還一些再來借吧 ❗️😊",
+      });
+    } else {
+      response.push({
+        type: "text",
+        text: "告訴我桌遊編號我才能幫你借。😘",
+      });
+    }
+
+    return response as ReturnType<MessageHandler>;
   },
 
   還桌遊: async (_, uuid: string) => {
@@ -297,6 +310,16 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       field: "借用人",
       value: users[uuid].name,
     });
+
+    if (borrowedGames.length === 0) {
+      users[uuid].status = "normal";
+      return [
+        {
+          type: "text",
+          text: `${users[uuid].nickname}～你目前沒有借任何桌遊喔 ❗️😊`,
+        },
+      ];
+    }
 
     return [
       { type: "text", text: `${users[uuid].nickname} 你已經借了:` },
