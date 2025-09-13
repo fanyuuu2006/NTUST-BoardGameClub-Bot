@@ -317,7 +317,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       }
 
       users[uuid].status = "normal";
-      users[uuid].variables.game = undefined;
 
       return [
         {
@@ -348,6 +347,8 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         throw new Error("!users[uuid].variables.game");
       }
       users[uuid].variables.game.position = messageText;
+      users[uuid].variables.game.borrowed = false;
+      users[uuid].variables.game.borrower = undefined;
 
       const { err } = await updateAssetsSheetRow(
         { field: "id", value: users[uuid].variables.game.id },
@@ -357,15 +358,12 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         throw err;
       }
 
-      users[uuid].status = "awaiting_returnid";
+      users[uuid].status = "normal";
+      users[uuid].variables.game = undefined;
       return [
         {
           type: "text",
-          text: "Ok~~~\n收到你放的櫃子位置了！\n繼續進行還遊戲的流程吧😎😎😎",
-        },
-        {
-          type: "text",
-          text: "再次告訴我桌遊編號：",
+          text: `${users[uuid].nickname}你很棒👍有記得還桌遊\n幫我把它放回 ${messageText} 櫃，拜托囉~~😘`,
         },
       ];
     } catch (err) {
