@@ -19,6 +19,8 @@ export const main = async (req: LineRequest, res: Response) => {
 const _handleEvent = async (
   event: MessageEvent
 ): Promise<line.MessageAPIResponseBase | null | undefined> => {
+  console.log(JSON.stringify(event, null, 2));
+
   // 只能使用傳訊息的方式
   if (
     event.type !== "message" ||
