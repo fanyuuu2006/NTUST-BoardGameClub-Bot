@@ -19,9 +19,9 @@ export const main = async (req: LineRequest, res: Response) => {
 const _handleEvent = async (
   event: MessageEvent
 ): Promise<line.MessageAPIResponseBase | null | undefined> => {
-  console.log(JSON.stringify(event, null, 2));
+  console.log(JSON.stringify(event, null, 4)); // 輸出事件內容到控制台
 
-  // 只能使用傳訊息的方式
+  // 只處理訊息事件
   if (
     event.type !== "message" ||
     event.message.type !== "text" ||
