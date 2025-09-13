@@ -12,13 +12,6 @@ import {
 
 export const keywordItems = [
   {
-    keyword: "手動註冊",
-    menberOnly: false,
-    permissionStrict: false,
-    needAllow: false,
-    description: "",
-  },
-  {
     keyword: "幫助",
     menberOnly: false,
     permissionStrict: false,
@@ -33,7 +26,14 @@ export const keywordItems = [
     description:
       "哼～我才不會幫社員以外的人處理借還桌遊的事勒😤！所以快告訴我你的入社序號跟資料，我就...就勉為其難記住你好了💭，應該吧",
   },
-
+  {
+    keyword: "手動註冊",
+    menberOnly: false,
+    permissionStrict: false,
+    needAllow: false,
+    description:
+      "如果註冊時小傲驕它傲驕不理你，可以試著輸入「手動註冊」來進行手動註冊喔 🤗",
+  },
   {
     keyword: "簽到",
     menberOnly: true,
@@ -131,9 +131,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
           .filter((item) => {
             // 排除幫助本身
             if (item.keyword === "幫助") return false;
-            // 如果需要會員權限但用戶不是會員，則過濾掉
+            // 如果需要社員權限但用戶不是，則過濾掉
             if (item.menberOnly && !users[uuid].isMember()) return false;
-            // 如果 permissionStrict == true，則需要 users[uuid].isManager() == true
+            // 如果需要幹部權限但用戶不是，則過濾掉
             if (item.permissionStrict && !users[uuid].isManager()) return false;
             return true;
           })
