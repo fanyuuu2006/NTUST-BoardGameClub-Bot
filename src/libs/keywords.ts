@@ -18,6 +18,14 @@ export const keywordItems = [
     needAllow: false,
     description: "正常不會跑出這段",
   },
+    {
+    keyword: "手動註冊",
+    menberOnly: false,
+    permissionStrict: false,
+    needAllow: false,
+    description:
+      "如果註冊時小傲驕它傲驕不理你，可以試著輸入「手動註冊」來進行手動註冊喔 🤗",
+  },
   {
     keyword: "註冊",
     menberOnly: false,
@@ -25,14 +33,6 @@ export const keywordItems = [
     needAllow: false,
     description:
       "哼～我才不會幫社員以外的人處理借還桌遊的事勒😤！所以快告訴我你的入社序號跟資料，我就...就勉為其難記住你好了💭，應該吧",
-  },
-  {
-    keyword: "手動註冊",
-    menberOnly: false,
-    permissionStrict: false,
-    needAllow: false,
-    description:
-      "如果註冊時小傲驕它傲驕不理你，可以試著輸入「手動註冊」來進行手動註冊喔 🤗",
   },
   {
     keyword: "簽到",
