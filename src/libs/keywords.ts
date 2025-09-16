@@ -24,7 +24,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "如果註冊時小傲驕它傲驕不理你，可以試著輸入「手動註冊」來進行手動註冊喔 🤗",
+      "如果我...我一時大意沒理你的話，可以使用「手動註冊」功能啦 😤（才不是我故意的呢！）",
   },
   {
     keyword: "註冊",
@@ -32,7 +32,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "哼～我才不會幫社員以外的人處理借還桌遊的事勒😤！所以快告訴我你的入社序號跟資料，我就...就勉為其難記住你好了💭，應該吧",
+      "哼～我才不會幫陌生人處理借還桌遊的事勒😤！快告訴我你的入社序號，我就...就勉為其難記住你好了💭（雖然記住也不代表什麼啦～）",
   },
   {
     keyword: "簽到",
@@ -40,7 +40,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false, // 其實是 true 但為了不同的回覆所以設成 false
     description:
-      "社課的時候記得要乖乖簽到喔 ✍️！簽到次數越多，期末抽獎時中獎機率就越高呢 🎁～雖然我才不在乎你來不來 😏，但是...但是少一次機會可別怪我沒提醒你！",
+      "社課時記得要乖乖簽到喔 ✍️！簽到次數越多，期末抽獎中獎機率就越高呢 🎁～雖然...雖然我才不在乎你來不來 😏，但是少一次機會可別怪我沒提醒你！",
   },
   {
     keyword: "找桌遊",
@@ -48,7 +48,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "想找桌遊嗎？那就告訴我你想用哪種條件搜尋啦 🔍～不告訴我的話我可是會裝作沒聽到的喔😝！接著說出你想搜尋的關鍵字就行了👍",
+      "想找桌遊嗎？那就告訴我搜尋條件啦 🔍～不說清楚的話我可是會裝作沒聽到的喔😝！（雖然我會很貼心地提供選項給你選啦...才不是為了你呢！）",
   },
   {
     keyword: "借桌遊",
@@ -64,7 +64,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: true,
     description:
-      "同上，我才懶得跟你廢話😮‍💨，就是跟我講編號，放回我指定的位置，我跟同事都說好再滾，懂嗎❓",
+      "要還桌遊嗎？告訴我編號就好啦 😮‍💨～然後記得放回指定位置喔！我確認完畢你就自由了，很簡單吧 ✨",
   },
   {
     keyword: "建議桌遊",
@@ -72,7 +72,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "你想推薦社團買什麼桌遊嗎？嗯...既然你這麼有誠意，我就大發慈悲幫你轉達吧 😎～不過會不會採用就不是我能決定的囉！",
+      "想推薦社團買新桌遊嗎？嗯...看在你這麼認真的份上，我就勉為其難幫你轉達給幹部們吧 😎～不過會不會採用就不是我說了算囉",
   },
   {
     keyword: "我覺得好好玩",
@@ -88,7 +88,7 @@ export const keywordItems = [
     permissionStrict: false,
     needAllow: false,
     description:
-      "哼哼～我平常都有在偷偷收集大家喜歡的桌遊資訊呢 📊，雖然我才不會主動跟你講 🤪！如果你是社員的話，也可以跟我分享你喜歡我們社團的哪個桌遊～雖然...雖然我不是很在意就是了 🥱",
+      "哼哼～我平常都有在暗中收集大家的喜好資訊呢 📊，雖然我才不會主動告訴你🤪！如果你是社員的話，也可以跟我分享你喜歡我們社團的哪個桌遊～雖然...雖然我不是很在意就是了 🥱",
   },
   {
     keyword: "熱門桌遊",
@@ -180,7 +180,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     } catch (err) {
       console.error(err);
       return [
-        { type: "text", text: `簽到失敗了... ❌ 可能是系統出了點小問題～` },
+        { type: "text", text: `唉呀...簽到失敗了 ❌ 系統好像在鬧脾氣呢～\n等一下再試試看吧（才不是我的問題喔！我也很困擾的...）` },
       ];
     }
   },
@@ -219,7 +219,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       { type: "text", text: "請輸入你的入社序號來進行註冊喔 📝～" },
       {
         type: "text",
-        text: `作者：如果小傲驕它傲驕不理你，可以試著輸入「手動註冊」來進行手動註冊喔 🤗`,
+        text: `💡 小提醒：如果我反應有點遲鈍，可以試試「手動註冊」功能喔 🤗`,
       },
     ];
   },
@@ -296,7 +296,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     } else {
       response.push({
         type: "text",
-        text: "告訴我桌遊編號我才能幫你借。😘",
+        text: "快告訴我桌遊編號吧～不然我怎麼知道你要借什麼呢 😘（編號在盒子上啦）",
       });
     }
 
@@ -316,7 +316,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname}～你目前沒有借任何桌遊喔 ❗️😊`,
+          text: `${users[uuid].nickname}～你目前沒有借任何桌遊耶 🤔 是想來確認一下嗎？真乖真乖 😊`,
         },
       ];
     }
@@ -333,7 +333,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
             .join("\n\n"),
         })
       ),
-      { type: "text", text: "告訴我桌遊編號我才能幫你還。😘" },
+      { type: "text", text: "告訴我要還哪個編號的桌遊吧～我來幫你處理 😘" },
     ] as ReturnType<MessageHandler>;
   },
 
@@ -343,7 +343,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `${users[uuid].nickname} 先讓我聽聽看你想推薦什麼桌遊❓\n我考慮看看😎`,
+        text: `${users[uuid].nickname}～說說看你想推薦什麼桌遊吧 💭\n我會認真考慮的...大概啦 😎`,
       },
     ];
   },
@@ -354,7 +354,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `${users[uuid].nickname} 你喜歡社辦哪款桌遊⁉️\n告訴我編號😃`,
+        text: `${users[uuid].nickname}～哦？你玩到什麼好玩的桌遊了嗎 🤔？\n快告訴我編號吧，我來幫你記錄一下～（才不是我好奇呢！）😃`,
       },
     ];
   },
@@ -364,14 +364,14 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `${users[uuid].nickname} 是想推薦\n還是被推薦😎😎`,
+        text: `${users[uuid].nickname}～想看看大家都推薦什麼，還是要分享你的心得呢 😎？\n我可是很認真在收集這些資料的喔`,
       },
       {
         type: "template",
-        altText: "recommend menu",
+        altText: "推薦功能選單",
         template: {
           type: "buttons",
-          text: " ",
+          text: "選擇你要的功能吧～",
           actions: [
             { label: "熱門桌遊", type: "message", text: "熱門桌遊" },
             { label: "我覺得好好玩", type: "message", text: "我覺得好好玩" },
@@ -413,7 +413,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     return [
       {
         type: "text",
-        text: `✨ 熱門桌遊排行榜✨（依被推薦次數排序）\n————————————\n${top10
+        text: `✨ 熱門桌遊排行榜 ✨\n（根據大家的推薦次數排序喔～）\n————————————\n${top10
           .slice(0, 5)
           .join("\n\n")}`,
       },
@@ -421,7 +421,7 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         type: "text",
         text: `${top10
           .slice(5, 10)
-          .join("\n\n")}\n————————————\n🎉 快來看看你玩過幾款吧！`,
+          .join("\n\n")}\n————————————\n🎉 怎麼樣？有你玩過的嗎？\n雖然我才不在意你的品味...但如果有喜歡的記得告訴我喔 😏`,
       },
     ];
   },
