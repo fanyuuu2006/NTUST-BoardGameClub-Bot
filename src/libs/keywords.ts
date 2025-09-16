@@ -38,7 +38,7 @@ export const keywordItems = [
     keyword: "簽到",
     menberOnly: true,
     permissionStrict: false,
-    needAllow: true,
+    needAllow: false, // 其實是 true 但為了不同的回覆所以設成 false
     description:
       "社課的時候記得要乖乖簽到喔 ✍️！簽到次數越多，期末抽獎時中獎機率就越高呢 🎁～雖然我才不在乎你來不來 😏，但是...但是少一次機會可別怪我沒提醒你！",
   },
