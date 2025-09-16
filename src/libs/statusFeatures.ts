@@ -87,7 +87,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         return [
           {
             type: "text",
-            text: `❌無法查詢 ${messageText}`,
+            text: `❌ 抱歉，無法查詢「${messageText}」\n\n🔍 可查詢的欄位有：\n• 編號\n• 英文名稱\n• 中文名稱\n• 種類\n\n請重新選擇要查詢的欄位~`,
           },
         ];
       }
@@ -98,7 +98,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `請輸入要搜尋🔍的 ${matchedField} 關鍵字：`,
+          text: `✅ 好的！請輸入要搜尋的 ${matchedField} 關鍵字：\n\n💡 小提示：關鍵字不需要完全相符，輸入部分名稱即可搜尋~`,
         },
       ];
     }
@@ -117,6 +117,19 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     //進行搜尋，並顯示搜尋結果
     const boardgames = await getBoardGamesByCondition({ field, value });
 
+    // 如果沒有找到任何結果
+    if (boardgames.length === 0) {
+      users[uuid].status = "normal";
+      users[uuid].variables.searchParams = undefined;
+      users[uuid].variables.page = 0;
+      return [
+        {
+          type: "text",
+          text: `😅 很遺憾！在「${field}」中找不到包含「${value}」的桌遊\n\n💡 建議：\n• 檢查關鍵字是否正確\n• 嘗試使用更簡短的關鍵字\n• 或者換個搜尋欄位試試看~`,
+        },
+      ];
+    }
+
     const pageView = 3; // 每頁顯示的結果數量
     const totalPages = Math.ceil(boardgames.length / pageView); // 總頁數 ex. 5/6 => 2
     // 確保頁面不會小於 0
@@ -132,60 +145,103 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     const start = currentPage * pageView;
     const end = Math.min(start + pageView, boardgames.length); // 保證結束頁面不超過資料長度
 
+    // 動態設定按鈕顏色和可用性
+    const isFirstPage = currentPage === 0;
+    const isLastPage = currentPage === totalPages - 1;
+
     users[uuid].status = "awaiting_search";
     return [
       {
         type: "flex",
-        altText: "分頁結果",
+        altText: `搜尋結果 第${currentPage + 1}頁`,
         contents: {
           type: "bubble",
+          header: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "text",
+                text: "🎲 桌遊搜尋結果",
+                weight: "bold",
+                size: "lg",
+                color: "#1DB446",
+              },
+              {
+                type: "text",
+                text: `搜尋「${field}」包含「${value}」`,
+                size: "sm",
+                color: "#666666",
+                margin: "sm",
+              },
+            ],
+            backgroundColor: "#F0F8FF",
+            paddingAll: "md",
+          },
           body: {
             type: "box",
             layout: "vertical",
             contents: [
               {
                 type: "text",
-                text: `第${currentPage + 1} 頁 / 共 ${totalPages} 頁\n\n${
-                  currentPage < 0 || currentPage >= totalPages
-                    ? "沒資料不要再翻了啦😣"
-                    : `${boardgames
-                        .slice(start, end)
-                        .map((game) => game.toDisplayText(uuid))
-                        .join("\n\n")}`
-                }`,
-                wrap: true,
-                size: "md",
+                text: `📊 第 ${currentPage + 1} 頁 / 共 ${totalPages} 頁  共找到 ${boardgames.length} 個結果`,
+                size: "sm",
+                color: "#666666",
+                margin: "none",
+                weight: "bold",
               },
               {
-                type: "box",
-                layout: "horizontal",
-                contents: [
-                  {
-                    type: "button",
-                    action: {
-                      type: "message",
-                      label: "上一頁",
-                      text: "上一頁",
-                    },
-                    color: "#AAAAAA",
-                    style: "primary",
-                    height: "sm",
-                  },
-                  {
-                    type: "button",
-                    action: {
-                      type: "message",
-                      label: "下一頁",
-                      text: "下一頁",
-                    },
-                    color: "#AAAAAA",
-                    style: "primary",
-                    height: "sm",
-                  },
-                ],
-                spacing: "md",
+                type: "separator",
+                margin: "md",
+              },
+              {
+                type: "text",
+                text: `${boardgames
+                  .slice(start, end)
+                  .map((game) => game.toDisplayText(uuid))
+                  .join("\n\n")}`,
+                wrap: true,
+                size: "sm",
+                margin: "md",
               },
             ],
+            paddingAll: "md",
+          },
+          footer: {
+            type: "box",
+            layout: "horizontal",
+            contents: [
+              {
+                type: "button",
+                action: {
+                  type: "message",
+                  label: "◀ 上一頁",
+                  text: "上一頁",
+                },
+                color: isFirstPage ? "#CCCCCC" : "#1DB446",
+                style: "primary",
+                height: "sm",
+                flex: 1,
+              },
+              {
+                type: "separator",
+                margin: "sm",
+              },
+              {
+                type: "button",
+                action: {
+                  type: "message",
+                  label: "下一頁 ▶",
+                  text: "下一頁",
+                },
+                color: isLastPage ? "#CCCCCC" : "#1DB446",
+                style: "primary",
+                height: "sm",
+                flex: 1,
+              },
+            ],
+            spacing: "sm",
+            paddingAll: "md",
           },
         },
       },
