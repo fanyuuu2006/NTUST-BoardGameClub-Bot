@@ -87,7 +87,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         return [
           {
             type: "text",
-            text: `❌ 抱歉，無法查詢「${messageText}」\n\n🔍 可查詢的欄位有：\n• 編號\n• 英文名稱\n• 中文名稱\n• 種類\n\n請重新選擇要查詢的欄位~`,
+            text: `❌ 抱歉，無法查詢「${messageText}」\n\n🔍 可查詢的欄位有：\n${validFields.map(f => `• ${f}`).join("\n")}\n\n請重新選擇要查詢的欄位~`,
           },
         ];
       }
@@ -127,6 +127,10 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
           type: "text",
           text: `😅 很遺憾！在「${field}」中找不到包含「${value}」的桌遊\n\n💡 建議：\n• 檢查關鍵字是否正確\n• 嘗試使用更簡短的關鍵字\n• 或者換個搜尋欄位試試看~`,
         },
+        {
+          type: "text",
+          text: `如果想退出搜尋，請輸入「重置」ㄛ~`,
+        }
       ];
     }
 
