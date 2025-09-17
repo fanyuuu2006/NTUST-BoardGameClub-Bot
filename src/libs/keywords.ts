@@ -18,7 +18,7 @@ export const keywordItems = [
     needAllow: false,
     description: "正常不會跑出這段",
   },
-    {
+  {
     keyword: "手動註冊",
     menberOnly: false,
     permissionStrict: false,
@@ -103,8 +103,7 @@ export const keywordItems = [
     menberOnly: true,
     permissionStrict: true,
     needAllow: false,
-    description:
-      "這是開啟功能的神奇指令喔 ✨～雖然看起來很簡單，但可是很重要的呢 🙄！",
+    description: "這是開啟功能的指令喔 ✨～用於允許借還桌遊和社課簽到！",
   },
   {
     keyword: "off",
@@ -180,7 +179,10 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
     } catch (err) {
       console.error(err);
       return [
-        { type: "text", text: `唉呀...簽到失敗了 ❌ 系統好像在鬧脾氣呢～\n等一下再試試看吧（才不是我的問題喔！我也很困擾的...）` },
+        {
+          type: "text",
+          text: `唉呀...簽到失敗了 ❌ 系統好像在鬧脾氣呢～\n等一下再試試看吧（才不是我的問題喔！我也很困擾的...）`,
+        },
       ];
     }
   },
@@ -421,7 +423,9 @@ export const kewordFeatures: Record<Keyword, MessageHandler> = {
         type: "text",
         text: `${top10
           .slice(5, 10)
-          .join("\n\n")}\n————————————\n🎉 怎麼樣？有你玩過的嗎？\n雖然我才不在意你的品味...但如果有喜歡的記得告訴我喔 😏`,
+          .join(
+            "\n\n"
+          )}\n————————————\n🎉 怎麼樣？有你玩過的嗎？\n雖然我才不在意你的品味...但如果有喜歡的記得告訴我喔 😏`,
       },
     ];
   },
