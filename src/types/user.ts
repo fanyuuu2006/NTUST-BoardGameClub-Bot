@@ -88,7 +88,7 @@ export class User {
     return this.permission === "幹部" || this.permission === "先人";
   }
 
-  async isMember(): Promise<boolean> {
+  isMember(): boolean {
     return !!this.permission;
   }
 }

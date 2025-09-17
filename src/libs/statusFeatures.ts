@@ -26,7 +26,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
   ],
   normal: async (messageText, uuid) => {
     users[uuid].status = "hold";
-    const isMember = await users[uuid].isMember();
     for (const {
       keyword,
       menberOnly,
@@ -34,7 +33,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       needAllow,
     } of keywordItems) {
       if (messageText.toLowerCase().includes(keyword)) {
-        if (menberOnly && !isMember) {
+        if (menberOnly && !users[uuid].isMember()) {
           users[uuid].status = "normal";
           return [{ type: "text", text: "❌請先註冊，只有社員才能使用此功能" }];
         }
