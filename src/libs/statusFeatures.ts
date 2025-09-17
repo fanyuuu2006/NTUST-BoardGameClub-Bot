@@ -535,7 +535,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname} 算你有品味😉`,
+          text: `${users[uuid].nickname} 算你有品味😉\n我也覺得${matchBoardGame.id}:${matchBoardGame.name}很好玩～`,
         },
       ];
     } catch (err) {
