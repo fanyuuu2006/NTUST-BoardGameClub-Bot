@@ -264,7 +264,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         return [
           {
             type: "text",
-            text: `❌ 找不到編號為 ${messageText} 的桌遊`,
+            text: `❌ 找不到編號為「${messageText}」的桌遊\n請檢查編號是否正確`,
           },
         ];
       }
@@ -277,7 +277,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
         return [
           {
             type: "text",
-            text: `${users[uuid].nickname} 真可惜\n ${matchBoardgame.name.chinese} 被人搶先一步借走了🥲。`,
+            text: `😔 很遺憾 ${users[uuid].nickname}\n ${matchBoardgame.name.chinese} 被人搶先一步借走了🥲。`,
           },
         ];
       }
@@ -297,13 +297,13 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `${users[uuid].nickname} 你借了 ${matchBoardgame.id} ${matchBoardgame.name.chinese} 記得還哈❗`,
+          text: `✅ 借用成功！${users[uuid].nickname}\n📋 桌遊：${matchBoardgame.id} ${matchBoardgame.name.chinese}\n⏰ 請記得按時歸還喔！`,
         },
       ];
     } catch (err) {
       console.error(err);
       users[uuid].status = "awaiting_borrowid";
-      return [{ type: "text", text: `出現意外狀況 借用失敗❌` }];
+      return [{ type: "text", text: `❌ 系統發生錯誤，借用失敗\n請稍後再試或聯繫幹部` }];
     }
   },
 
@@ -317,11 +317,11 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       });
 
       if (matchBoardgames.length === 0) {
-        users[uuid].status = "awaiting_borrowid";
+        users[uuid].status = "awaiting_returnid";
         return [
           {
             type: "text",
-            text: `❌ 找不到編號為 ${messageText} 的桌遊`,
+            text: `❌ 找不到編號為「${messageText}」的桌遊\n請檢查編號是否正確`,
           },
         ];
       }
@@ -498,7 +498,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `建議失敗❌`,
+          text: `❌ 建議提交失敗\n請稍後再試`,
         },
       ];
     }
@@ -544,7 +544,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `推薦失敗❌`,
+          text: `❌ 推薦失敗\n請稍後再試或聯繫幹部們`,
         },
       ];
     }
@@ -562,7 +562,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: "❌查無此序號",
+          text: "❌ 查無此註冊序號\n請檢查序號是否正確或聯繫幹部們",
         },
       ];
     }
@@ -572,7 +572,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: "⚠️此序號已註冊",
+          text: "⚠️ 此序號已完成註冊\n如有問題請聯繫幹部們",
         },
       ];
     }
@@ -708,7 +708,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     return [
       {
         type: "text",
-        text: "請輸入電話📞：",
+        text: "📞 請輸入你的聯絡電話：",
       },
     ];
   },
@@ -768,7 +768,7 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
       return [
         {
           type: "text",
-          text: `出現意外情況 註冊失敗❌`,
+          text: `❌ 註冊失敗，系統發生錯誤\n請稍後再試或聯繫幹部們`,
         },
       ];
     }
