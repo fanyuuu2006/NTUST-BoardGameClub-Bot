@@ -324,11 +324,9 @@ export const updateMemberSheetRow = async <T extends keyof User>(
     (() => {
       if (!users[uuid].lastSignInTime) return "";
       const date = users[uuid].lastSignInTime;
-      return (
-        date.getFullYear().toString() +
-        String(date.getMonth() + 1).padStart(2, "0") +
-        String(date.getDate()).padStart(2, "0")
-      );
+      return `${date.getFullYear().toString()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     })(),
   ];
 
