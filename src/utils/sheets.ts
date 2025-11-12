@@ -148,7 +148,7 @@ export const parseBoardGame = (row: AssetsSheetRow): BoardGame => {
  */
 export const getBoardGamesByCondition = async ({
   field,
-  value,
+  value, 
   strict = false,
 }: {
   field: AssetsSheetField;
@@ -167,7 +167,7 @@ export const getBoardGamesByCondition = async ({
       cellValue &&
       (strict
         ? cellValue === normalizedValue
-        : cellValue.includes(normalizedValue))
+        : normalize(cellValue).includes(normalizedValue))
     );
   });
   return matchRows.map(parseBoardGame).sort((a, b) => a.id - b.id);
