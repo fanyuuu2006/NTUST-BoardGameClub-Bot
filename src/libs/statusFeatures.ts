@@ -119,7 +119,6 @@ export const statusFeatures: Record<User["status"], MessageHandler> = {
     // 如果沒有找到任何結果
     if (boardgames.length === 0) {
       users[uuid].status = "awaiting_search";
-      users[uuid].variables.searchParams = undefined;
       users[uuid].variables.page = 0;
       return [
         {
